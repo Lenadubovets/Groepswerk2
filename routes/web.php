@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\IngredientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +24,11 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
-// // GET all ingredients
-// Route::get('/', function () {
-//     $ingredients = Ingredient::all();
-//     return $ingredients;
-// });
+// GET all ingredients
+Route::get('/products', [IngredientController::class, 'index']);
 
 // // GET ingredient by name
-// Route::get('/{name}', function ($name) {
+// Route::get('/products/{name}', function ($name) {
 //     $ingredient = Ingredient::where('name', $name)->get();
 //     return $ingredient;
 // });
