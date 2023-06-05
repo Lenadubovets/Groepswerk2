@@ -1,8 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\RecipeController;
+
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\IngredientController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +23,9 @@ use App\Http\Controllers\IngredientController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/recipes', [RecipeController::class, 'index']);
 
 
 Route::group(['prefix' => 'admin'], function () {
