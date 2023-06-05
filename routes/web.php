@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,15 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+// // GET all ingredients
+// Route::get('/', function () {
+//     $ingredients = Ingredient::all();
+//     return $ingredients;
+// });
+
+// // GET ingredient by name
+// Route::get('/{name}', function ($name) {
+//     $ingredient = Ingredient::where('name', $name)->get();
+//     return $ingredient;
+// });
