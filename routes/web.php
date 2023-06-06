@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\RecipeController;
-
+use App\Models\Recipe;
 
 use Illuminate\Http\Request;
+
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\IngredientController;
 
 
@@ -26,8 +27,17 @@ Route::get('/', function () {
 
 //get all recipes
 
-// Route::get('/recipes', [RecipeController::class, 'index']);
-Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes');
+Route::get('/recipes', function () {
+    return view('recipes',[
+        'recipes' =>Recipe::all()
+    ]);
+});
+
+//single recipe
+Route::get('/recipe/{id}', function ($id) {
+    $recipe = Recipe::find($id);
+    return view('recipe', compact('recipe'));
+});
 
 
 Route::group(['prefix' => 'admin'], function () {
