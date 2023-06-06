@@ -47,6 +47,14 @@ Route::group(['prefix' => 'admin'], function () {
 // GET all ingredients
 Route::get('/products', [IngredientController::class, 'index']);
 
+//Add to shopping list
+Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToFridgelist'])->name('ingredient.moveToFridgeList');
+
+// //Delete ingredients 
+Route::delete('/ingredient/{id}/delete', [IngredientController::class, 'delete'])->name('ingredient.delete');
+
+
+
 // // GET ingredient by name
 // Route::get('/products/{name}', function ($name) {
 //     $ingredient = Ingredient::where('name', $name)->get();
