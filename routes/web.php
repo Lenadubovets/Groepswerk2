@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\IngredientController;
+use TCG\Voyager\Facades\Voyager;
 
 
 /*
@@ -54,7 +55,7 @@ Route::get('/products', [IngredientController::class, 'index']);
 //Add to shopping list
 Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToFridgelist'])->name('ingredient.moveToFridgeList');
 
-// //Delete ingredients 
+// //Delete ingredients
 Route::delete('/ingredient/{id}/delete', [IngredientController::class, 'delete'])->name('ingredient.delete');
 
 
