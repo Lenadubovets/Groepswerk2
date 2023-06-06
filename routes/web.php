@@ -39,6 +39,9 @@ Route::get('/recipe/{id}', function ($id) {
     return view('recipe', compact('recipe'));
 });
 
+//add ingredients to recipe
+Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
+
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
