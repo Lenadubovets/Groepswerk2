@@ -49,14 +49,18 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
-// GET all ingredients
-Route::get('/products', [IngredientController::class, 'index']);
+//Search ingredients
+Route::get('/ingredients', [IngredientController::class, 'search'])->name('ingredients.search');
+
+Route::post('/ingredients/{ingredient}/add-to-selected', [IngredientController::class, 'addToSelected'])->name('ingredients.addToSelected');
 
 //Add to shopping list
 Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToFridgelist'])->name('ingredient.moveToFridgeList');
 
 // //Delete ingredients
 Route::delete('/ingredient/{id}/delete', [IngredientController::class, 'delete'])->name('ingredient.delete');
+
+
 
 
 
@@ -71,3 +75,4 @@ Route::get('/register', [UserController::class, 'create']);
 
 //Create New User
 Route::post('/users', [UserController::class, 'store']);
+

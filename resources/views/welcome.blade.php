@@ -35,7 +35,7 @@
               </button>
             </div>
             <div class="hidden lg:flex lg:gap-x-12">
-              <a href="/products" class="text-sm font-semibold leading-6 text-gray-900"> Your Freego </a>
+              <a href="/ingredients" class="text-sm font-semibold leading-6 text-gray-900"> Your Freego </a>
               <a href="" class="text-sm font-semibold leading-6 text-gray-900"><i class="fa-solid fa-cart-shopping"></i> </a>
               <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"> Recipes </a>
               <a href="#" class="text-sm font-semibold leading-6 text-gray-900"><i class="fa-solid fa-heart"></i></a>
@@ -66,9 +66,9 @@
               <div class="mt-6 flow-root">
                 <div class="-my-6 divide-y divide-gray-500/10">
                   <div class="space-y-2 py-6">
-                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"> Your Freego </a>
+                    <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"> Your Freego </a>
                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"> <i class="fa-solid fa-cart-shopping"></i></a>
-                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Recipes</a>
+                    <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Recipes</a>
                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"><i class="fa-solid fa-heart"></i> </a>
                   </div>
                   <div class="py-6">
