@@ -24,8 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//get all recipes
 
-Route::get('/recipes', [RecipeController::class, 'index']);
+// Route::get('/recipes', [RecipeController::class, 'index']);
+Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes');
 
 
 Route::group(['prefix' => 'admin'], function () {

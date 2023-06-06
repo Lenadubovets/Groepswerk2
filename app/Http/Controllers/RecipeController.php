@@ -13,4 +13,6 @@ class RecipeController extends Controller
 
         return view('recipes', ['recipes' => $recipes]);
     }
+    
+   
 }
