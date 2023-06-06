@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\IngredientController;
+use TCG\Voyager\Facades\Voyager;
 
 
 /*
@@ -28,8 +30,8 @@ Route::get('/', function () {
 //get all recipes
 
 Route::get('/recipes', function () {
-    return view('recipes',[
-        'recipes' =>Recipe::all()
+    return view('recipes', [
+        'recipes' => Recipe::all()
     ]);
 });
 
@@ -53,7 +55,7 @@ Route::get('/products', [IngredientController::class, 'index']);
 //Add to shopping list
 Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToFridgelist'])->name('ingredient.moveToFridgeList');
 
-// //Delete ingredients 
+// //Delete ingredients
 Route::delete('/ingredient/{id}/delete', [IngredientController::class, 'delete'])->name('ingredient.delete');
 
 
@@ -63,3 +65,9 @@ Route::delete('/ingredient/{id}/delete', [IngredientController::class, 'delete']
 //     $ingredient = Ingredient::where('name', $name)->get();
 //     return $ingredient;
 // });
+
+//Show register form
+Route::get('/register', [UserController::class, 'create']);
+
+//Create New User
+Route::post('/users', [UserController::class, 'store']);
