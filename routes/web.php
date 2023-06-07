@@ -33,7 +33,7 @@ Route::get('/recipes', function () {
     return view('recipes', [
         'recipes' => Recipe::all()
     ]);
-});
+})->middleware('auth');
 
 //single recipe
 Route::get('/recipe/{id}', function ($id) {
@@ -49,10 +49,15 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
+
+// GET all ingredients
+Route::get('/products', [IngredientController::class, 'index'])->middleware('auth');
+
 //Search ingredients
 Route::get('/ingredients', [IngredientController::class, 'search'])->name('ingredients.search');
 
 Route::post('/ingredients/{ingredient}/add-to-selected', [IngredientController::class, 'addToSelected'])->name('ingredients.addToSelected');
+
 
 //Add to shopping list
 Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToFridgelist'])->name('ingredient.moveToFridgeList');
@@ -75,4 +80,14 @@ Route::get('/register', [UserController::class, 'create']);
 
 //Create New User
 Route::post('/users', [UserController::class, 'store']);
+
+
+//Logout
+Route::post('/logout', [UserController::class, 'logout']);
+
+//Show Login Form
+Route::get('/login', [UserController::class, 'login'])->name('login');
+
+//Log In User
+Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 
