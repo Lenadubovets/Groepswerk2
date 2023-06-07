@@ -14,6 +14,7 @@ class UserController extends Controller
         return view('users.register');
     }
 
+    //Create New User
     public function store(Request $request)
     {
         $formFields = $request->validate([
@@ -35,5 +36,17 @@ class UserController extends Controller
         //TODO: Display Flash Message
         return redirect('/')->with('message', 'Registration successful! You\'re now logged in.');
 
+    }
+
+    //Log User Out
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        //Invalidate User Session
+        $request->session()->invalidate();
+        //Regenerate csrf Token
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'You have been logged out!');
     }
 }

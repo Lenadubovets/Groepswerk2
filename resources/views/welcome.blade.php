@@ -51,10 +51,10 @@
                                     class="fa-solid fa-cart-shopping"></i> Your Freego </a>
                             <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"><i
                                     class="fa-solid fa-heart"></i> Recipes </a>
-                            <form class="inline text-sm font-semibold leading-6 text-gray-90" methos="POST"
+                            <form class="inline text-sm font-semibold leading-6 text-gray-90" method="POST"
                                 action="/logout">
                                 @csrf
-                                <button class="0" type="submit">
+                                <button type="submit">
                                     <i class="fa-solid fa-door-closed">Logout</i>
                                 </button>
                             </form>
