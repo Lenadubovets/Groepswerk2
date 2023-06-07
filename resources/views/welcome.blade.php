@@ -39,6 +39,7 @@
                 </div>
 
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                    {{-- If user is logged in, show name, Freego, Likes --}}
                     @auth()
                         <div class="hidden lg:flex lg:gap-x-12">
                             <span class="font-bold uppercase px-12">
@@ -50,7 +51,16 @@
                                     class="fa-solid fa-cart-shopping"></i> Your Freego </a>
                             <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"><i
                                     class="fa-solid fa-heart"></i> Recipes </a>
+                            <form class="inline text-sm font-semibold leading-6 text-gray-90" methos="POST"
+                                action="/logout">
+                                @csrf
+                                <button class="0" type="submit">
+                                    <i class="fa-solid fa-door-closed">Logout</i>
+                                </button>
+                            </form>
                         </div>
+
+                        {{-- If not logged in, show default links --}}
                     @else
                         <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
                                 aria-hidden="true">&rarr;</span></a>
