@@ -33,7 +33,7 @@ Route::get('/recipes', function () {
     return view('recipes', [
         'recipes' => Recipe::all()
     ]);
-});
+})->middleware('auth');
 
 //single recipe
 Route::get('/recipe/{id}', function ($id) {
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 // GET all ingredients
-Route::get('/products', [IngredientController::class, 'index']);
+Route::get('/products', [IngredientController::class, 'index'])->middleware('auth');
 
 //Add to shopping list
 Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToFridgelist'])->name('ingredient.moveToFridgeList');
@@ -76,7 +76,7 @@ Route::post('/users', [UserController::class, 'store']);
 Route::post('/logout', [UserController::class, 'logout']);
 
 //Show Login Form
-Route::get('/login', [UserController::class, 'login']);
+Route::get('/login', [UserController::class, 'login'])->name('login');
 
 //Log In User
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
