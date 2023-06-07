@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
+ further-with-delete/add
+    protected $fillable = ['name'];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'ingredients_user');
+    }
+}
+
     use HasFactory;
     
     protected $table = 'ingredients';
@@ -18,3 +27,4 @@ class Ingredient extends Model
 
  
 }
+
