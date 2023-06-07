@@ -62,7 +62,7 @@
 
                         {{-- If not logged in, show default links --}}
                     @else
-                        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
+                        <a href="/login" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
                                 aria-hidden="true">&rarr;</span></a>
                         <a href="/register" class="text-sm font-semibold leading-6 text-gray-900">Register <span
                                 aria-hidden="true">&rarr;</span></a>
