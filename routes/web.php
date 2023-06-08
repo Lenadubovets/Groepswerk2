@@ -43,6 +43,12 @@ Route::get('/recipes', [RecipeController::class, 'index'])
 Route::get('/recipe/{id}', [RecipeController::class, 'show'])
     ->name('recipes.show');
 
+//pdf
+Route::get('/recipes/{id}/download', [RecipeController::class, 'downloadPDF'])
+    ->middleware('auth')
+    ->name('recipes.download');
+
+
 //add ingredients to recipe
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
 
