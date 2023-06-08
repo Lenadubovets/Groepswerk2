@@ -9,7 +9,12 @@ class Ingredient extends Model
 {
     use HasFactory;
 
+    
+    
+
+
     protected $table = 'ingredients';
+
 
     protected $fillable = ['name'];
 
@@ -22,4 +27,13 @@ class Ingredient extends Model
     {
         return $this->belongsToMany(Recipe::class, 'ingredient_recipe', 'ingredient_id', 'recipe_id');
     }
+
 }
+
+
+ 
+
+
+
+}
+
