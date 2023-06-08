@@ -9,10 +9,6 @@ class Ingredient extends Model
 {
     use HasFactory;
 
-    
-    
-
-
     protected $table = 'ingredients';
 
 
