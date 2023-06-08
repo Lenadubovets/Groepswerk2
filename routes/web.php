@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 // GET all ingredients
-Route::get('/products', [IngredientController::class, 'index'])->middleware('auth');
+// Route::get('/products', [IngredientController::class, 'index'])->middleware('auth');
 
 //Search ingredients
 Route::get('/ingredients', [IngredientController::class, 'search'])->name('ingredients.search');

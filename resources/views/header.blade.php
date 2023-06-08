@@ -29,7 +29,7 @@
                                 </span>
                             </div>
                             <div class="hidden lg:flex lg:gap-x-12">
-                                <a href="/products" class="text-sm font-semibold leading-6 text-gray-900"><i
+                                <a href="/ingredients" class="text-sm font-semibold leading-6 text-gray-900"><i
                                         class="fa-solid fa-cart-shopping"></i> Your Freego </a>
                                 <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"><i
                                         class="fa-solid fa-heart"></i> Recipes </a>

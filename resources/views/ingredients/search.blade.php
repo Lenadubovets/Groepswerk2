@@ -26,7 +26,6 @@
 @endif
 
 @if ($selectedIngredients->count() > 0)
-    
     <table>
         <thead>
             <tr>
@@ -36,19 +35,20 @@
         <tbody>
             @foreach ($selectedIngredients as $ingredient)
                 <tr>
-                    <td>{{ $ingredient->name }}</td>
-                    <a href="{{ route('ingredient.moveToFridgeList', $ingredient->id) }}">
-                        <button class="text-xs text-white bg-blue-500 hover:bg-blue-700 rounded-lg px-2 py-1">
-                            <i class="fa-solid fa-cart-plus"></i>
-                        </button>
-                    </a>
-                    <form action="{{ route('ingredient.delete', ['id' => $ingredient->id]) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="text-xs text-white bg-red-500 hover:bg-red-700 rounded-lg px-2 py-1" type="submit">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </form>
+                    <td>
+                        {{ $ingredient->name }}
+                        <a href="{{ route('ingredient.moveToFridgeList', $ingredient->id) }}">
+                            <button class="text-xs text-white bg-blue-500 hover:bg-blue-700 rounded-lg px-2 py-1">
+                            <i class="fa-solid fa-cart-plus"></i> 
+                        </a>
+                        <form action="{{ route('ingredient.delete', ['id' => $ingredient->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="text-xs text-white bg-red-500 hover:bg-red-700 rounded-lg px-2 py-1" type="submit">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -58,4 +58,3 @@
 @endif
 
 @endsection
-
