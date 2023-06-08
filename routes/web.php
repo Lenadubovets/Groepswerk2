@@ -35,17 +35,13 @@ Route::get('/', function () {
 
 //get all recipes
 
-Route::get('/recipes', function () {
-    return view('recipes', [
-        'recipes' => Recipe::all()
-    ]);
-})->middleware('auth');
+Route::get('/recipes', [RecipeController::class, 'index'])
+    ->middleware('auth')
+    ->name('recipes.index');
 
-//single recipe
-Route::get('/recipe/{id}', function ($id) {
-    $recipe = Recipe::find($id);
-    return view('recipe', compact('recipe'));
-});
+ //single recipe
+Route::get('/recipe/{id}', [RecipeController::class, 'show'])
+    ->name('recipes.show');
 
 //add ingredients to recipe
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
