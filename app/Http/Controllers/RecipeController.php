@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\DB;
 class RecipeController extends Controller
 {
 
-    // public function index()
-    // {
-    //     $recipes = Recipe::all();
-    //     return view('recipes.recipes', compact('recipes'));
-    // }
     public function index(Request $request)
     {
         $searchQuery = $request->input('search');
@@ -23,10 +18,11 @@ class RecipeController extends Controller
         $recipes = Recipe::when($searchQuery, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%")
                 ->orWhere('instruction', 'like', "%{$search}%");
-        })->get();
+        })->paginate(6);
 
         return view('recipes.recipes', compact('recipes'));
     }
+
 
     public function show($id)
     {
@@ -36,5 +32,4 @@ class RecipeController extends Controller
     }
     
 
- 
 }
