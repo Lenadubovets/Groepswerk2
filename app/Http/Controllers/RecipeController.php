@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use Dompdf\Dompdf;
 use App\Models\Recipe;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,6 +32,19 @@ class RecipeController extends Controller
         $recipe->load('ingredients');
         return view('recipes.recipe', compact('recipe'));
     }
+
+    public function downloadPDF($id)
+    {
+        $recipe = Recipe::findOrFail($id);
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('recipes.recipe_pdf', compact('recipe')));
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream('recipe.pdf');
+    }
+
     
 
 }

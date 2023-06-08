@@ -32,6 +32,15 @@
   @else
     <p>Recipe not found.</p>
   @endif
+  <div class="mt-6 flex justify-end">
+    <a href="{{ route('recipes.download', $recipe->id) }}" class="text-blue-500 hover:underline mr-4">
+        Download PDF
+    </a>
+    <button onclick="window.print()" class="text-blue-500 hover:underline">
+        Print Recipe
+    </button>
+</div>
+</div>
 @endsection
 
 
