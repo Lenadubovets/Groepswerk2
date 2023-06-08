@@ -40,5 +40,6 @@
     @endforeach
     @endif
   </div>
+  {{ $recipes->links() }}
 </body>
 @endsection
