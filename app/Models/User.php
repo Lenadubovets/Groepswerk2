@@ -41,4 +41,13 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function selectedIngredients()
+    {
+        return $this->belongsToMany(Ingredient::class, 'ingredient_user', 'user_id', 'ingredient_id')
+                    ->withPivot('user_id', 'ingredient_id');
+    }
+    
+    
+
 }
