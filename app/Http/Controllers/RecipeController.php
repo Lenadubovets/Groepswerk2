@@ -11,19 +11,30 @@ use Illuminate\Support\Facades\DB;
 class RecipeController extends Controller
 {
 
-    public function index()
+    // public function index()
+    // {
+    //     $recipes = Recipe::all();
+    //     return view('recipes.recipes', compact('recipes'));
+    // }
+    public function index(Request $request)
     {
-        $ingredients = Recipe::all();
-        return view('recipes', compact('recipes'));
+        $searchQuery = $request->input('search');
+
+        $recipes = Recipe::when($searchQuery, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%")
+                ->orWhere('instruction', 'like', "%{$search}%");
+        })->get();
+
+        return view('recipes.recipes', compact('recipes'));
     }
 
     public function show($id)
     {
         $recipe = Recipe::findOrFail($id);
-
-        // Load the ingredients associated with the recipe
         $recipe->load('ingredients');
-
-        return view('recipe', compact('recipe'));
+        return view('recipes.recipe', compact('recipe'));
     }
+    
+
+ 
 }
