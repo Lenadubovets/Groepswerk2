@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                        {{-- If user is logged in, show name, Freego, Likes --}}
+                        
                         @auth()
                             <div class="hidden lg:flex lg:gap-x-12">
                                 <span class="font-bold uppercase px-12">
@@ -29,8 +29,8 @@
                                 </span>
                             </div>
                             <div class="hidden lg:flex lg:gap-x-12">
-                                <a href="/ingredients" class="text-sm font-semibold leading-6 text-gray-900"><i
-                                        class="fa-solid fa-cart-shopping"></i> Your Freego </a>
+                                <a href="/" class="text-sm font-semibold leading-6 text-gray-900"><i
+                                        class="fa-solid fa-cart-shopping"></i> Shopping List </a>
                                 <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"><i
                                         class="fa-solid fa-heart"></i> Recipes </a>
                                 <form class="inline text-sm font-semibold leading-6 text-gray-90" method="POST"

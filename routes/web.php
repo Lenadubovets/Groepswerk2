@@ -55,10 +55,6 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
-
-// GET all ingredients
-// Route::get('/products', [IngredientController::class, 'index'])->middleware('auth');
-
 //Search ingredients
 Route::get('/ingredients', [IngredientController::class, 'search'])->name('ingredients.search')->middleware('auth');
 
@@ -70,16 +66,6 @@ Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToF
 
 // //Delete ingredients
 Route::delete('/ingredient/{id}/delete', [IngredientController::class, 'delete'])->name('ingredient.delete');
-
-
-
-
-
-// // GET ingredient by name
-// Route::get('/products/{name}', function ($name) {
-//     $ingredient = Ingredient::where('name', $name)->get();
-//     return $ingredient;
-// });
 
 //Show register form
 Route::get('/register', [UserController::class, 'create']);
