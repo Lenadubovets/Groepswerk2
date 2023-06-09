@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ingredient;
 use App\Models\User;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class IngredientController extends Controller
 {
@@ -26,36 +27,63 @@ class IngredientController extends Controller
         return view('ingredients.search', compact('ingredients', 'selectedIngredients'));
     }
 
-   public function addToSelected(Request $request, Ingredient $ingredient)
-{
-    $user = auth()->user();
-    
-    if ($user->selectedIngredients()->where('ingredients.id', $ingredient->id)->exists()) {
-        return redirect()->route('ingredients.search')->with('message', 'You already have this ingredient');
+    public function addToSelected(Request $request, Ingredient $ingredient)
+    {
+        $user = auth()->user();
+
+        if ($user->selectedIngredients()->where('ingredients.id', $ingredient->id)->exists()) {
+            return redirect()->route('ingredients.search')->with('message', 'You already have this ingredient');
+        }
+
+        $user->selectedIngredients()->attach($ingredient->id);
+
+        return redirect()->route('ingredients.search');
     }
-    
-    $user->selectedIngredients()->attach($ingredient->id);
 
-    return redirect()->route('ingredients.search');
-}
 
-    
     public function delete($id)
     {
         $user = auth()->user();
         $user->selectedIngredients()->detach($id);
-    
+
         return redirect()->back()->with('message', 'Ingredient removed successfully');
     }
+
+    public function showShoppingList()
+    {
+        $user = auth()->user();
+        $shoppingListIngredients = DB::table('ingredient_user')
+            ->where('user_id', $user->id)
+            ->where('list', 'shoppingList')
+            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->select('ingredients.*')
+            ->get();
+
+        return view('shoppinglist.index', compact('shoppingListIngredients'));
+
+    }
+
+    public function removeFromShoppingList($ingredientId)
+    {
+        $user = auth()->user();
+        DB::table('ingredient_user')
+            ->where('user_id', $user->id)
+            ->where('ingredient_id', $ingredientId)
+            ->where('list', 'shoppingList')
+            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->delete();
+
+        return redirect()->route('shoppinglist.index')->with('message', 'Ingredient removed successfully!');
+    }
 }
- // public function moveToFridgeList($id)
-    // {
-    //     // Find ingredient by id
-    //     $ingredient = Ingredient::find($id);
+// public function moveToFridgeList($id)
+// {
+//     // Find ingredient by id
+//     $ingredient = Ingredient::find($id);
 
-    //     // Move the ingredient to the fridge list
-    //     $ingredient->list_id = $fridgeList->id;
-    //     $ingredient->save();
+//     // Move the ingredient to the fridge list
+//     $ingredient->list_id = $fridgeList->id;
+//     $ingredient->save();
 
-    //         return redirect()->back()->with('message', 'Ingredient moved successfully');
-    // }
+//         return redirect()->back()->with('message', 'Ingredient moved successfully');
+// }

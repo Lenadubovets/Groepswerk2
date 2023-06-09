@@ -49,8 +49,8 @@ Route::get('/recipes/{id}/download', [RecipeController::class, 'downloadPDF'])
     ->middleware('auth')
     ->name('recipes.download');
 
-////Search for recipes based on ingredients////
-//Search for recipes
+
+//Search for recipes based on ingredients
 Route::get('/recipes/search', [RecipeController::class, 'search'])->name('recipes.search')->middleware('auth');
 
 //add ingredients to recipe
@@ -67,6 +67,12 @@ Route::get('/ingredients', [IngredientController::class, 'search'])->name('ingre
 Route::post('/ingredients/{ingredient}/add-to-selected', [IngredientController::class, 'addToSelected'])->name('ingredients.addToSelected');
 
 Route::delete('/ingredients/{id}/delete', [IngredientController::class, 'delete'])->name('ingredients.delete');
+
+//Show Shopping List
+Route::get('/shoppinglist', [IngredientController::class, 'showShoppingList'])->name('shoppinglist.index')->middleware('auth');
+
+//Remove From Shopping List
+Route::delete('/shoppinglist/{ingredientId}', [IngredientController::class, 'removeFromShoppingList'])->name('shoppinglist.remove')->middleware('auth');
 
 //more.blade
 Route::get('/more', function () {
