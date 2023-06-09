@@ -1,6 +1,5 @@
 @extends('layout')
 @section('content')
-// more
 
 <form action="{{ route('recipes.index') }}" method="GET" class="mb-4">
   <div class="relative border-2 border-gray-100 m-4 rounded-lg">
