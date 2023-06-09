@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends \TCG\Voyager\Models\User
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -45,9 +45,16 @@ class User extends \TCG\Voyager\Models\User
     public function selectedIngredients()
     {
         return $this->belongsToMany(Ingredient::class, 'ingredient_user', 'user_id', 'ingredient_id')
-                    ->withPivot('user_id', 'ingredient_id');
+            ->select('ingredients.*')
+            ->withPivot('user_id', 'ingredient_id');
     }
-    
-    
+
+    public function getSelectedIngredientsAttribute()
+    {
+        return $this->selectedIngredients()->pluck('id');
+    }
+
+
+
 
 }

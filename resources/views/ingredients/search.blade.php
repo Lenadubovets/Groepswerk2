@@ -40,7 +40,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($selectedIngredients as $ingredient)
+                    @foreach ($selectedIngredients as $ingredientId)
+                        @php
+                            $ingredient = \App\Models\Ingredient::find($ingredientId)
+                        @endphp
                         <tr>
                             <td class="flex justify-between items-center py-2">
                                 <span>{{ $ingredient->name }}</span>
@@ -70,6 +73,13 @@
             <p>No ingredients added to the list.</p>
         @endif
     </div>
+    <div class="mb-6">
+    <h2 class="text-2xl font-bold mb-4">What can you make?</h2>
+        <form action="{{ route('recipes.search') }}" method="GET">
+            <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" type="submit">Search Recipes</button>
+        </form>
+    </div>
+
 </div>
 
 @endsection
