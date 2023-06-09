@@ -3,72 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class IngredientController extends Controller
 {
     public function search(Request $request)
-{
-    $query = $request->input('query');
-
-    if ($query) {
-        $ingredients = Ingredient::where('name', 'LIKE', "%$query%")->get();
-    } else {
-        $ingredients = collect(); // Initialize an empty collection
-    }
-
-    $selectedIngredients = collect(session('selectedIngredients', []));
-
-    return view('ingredients.search', compact('ingredients', 'selectedIngredients'));
-}
-
-    public function addToSelected(Request $request, Ingredient $ingredient)
     {
-        $selectedIngredients = collect(Session::get('selectedIngredients', []));
-        $selectedIngredients->push($ingredient);
-        Session::put('selectedIngredients', $selectedIngredients->all());
+        $query = $request->input('query');
 
-        return redirect()->route('ingredients.search');
-    }
-
-    public function delete($id)
-    {
-    // Find ingredient by id
-    $ingredient = Ingredient::find($id);
-
-    // Check if ingredient exists
-    if (!$ingredient) {
-        return Redirect::back()->with('error', 'Ingredient not found');
-    }
-    // Delete the ingredient
-    $ingredient->delete();
-
-    return Redirect::back()->with('message', 'Ingredient deleted successfully');
-    }
-
-    public function moveToFridgeList($id)
-    {
-        // Find ingredient by id
-        $ingredient = Ingredient::find($id);
-
-        // Move the ingredient to the fridge list
-        $ingredient->list_id = $fridgeList->id;
-        $ingredient->save();
-
-            return redirect()->back()->with('message', 'Ingredient moved successfully');
+        if ($query) {
+            $ingredients = Ingredient::where('name', 'LIKE', "%$query%")->get();
+        } else {
+            $ingredients = collect();
         }
-}
 
-   
+        $user = auth()->user();
+        $selectedIngredients = $user->selectedIngredients;
+
+        return view('ingredients.search', compact('ingredients', 'selectedIngredients'));
+    }
+
+   public function addToSelected(Request $request, Ingredient $ingredient)
+{
+    $user = auth()->user();
+    
+    if ($user->selectedIngredients()->where('ingredients.id', $ingredient->id)->exists()) {
+        return redirect()->route('ingredients.search')->with('message', 'You already have this ingredient');
+    }
+    
+    $user->selectedIngredients()->attach($ingredient->id);
+
+    return redirect()->route('ingredients.search');
+}
 
     
+    public function delete($id)
+    {
+        $user = auth()->user();
+        $user->selectedIngredients()->detach($id);
+    
+        return redirect()->back()->with('message', 'Ingredient removed successfully');
+    }
+}
+ // public function moveToFridgeList($id)
+    // {
+    //     // Find ingredient by id
+    //     $ingredient = Ingredient::find($id);
 
+    //     // Move the ingredient to the fridge list
+    //     $ingredient->list_id = $fridgeList->id;
+    //     $ingredient->save();
 
-
-
-
-
-
+    //         return redirect()->back()->with('message', 'Ingredient moved successfully');
+    // }
