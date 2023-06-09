@@ -32,7 +32,10 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::findOrFail($id);
         $recipe->load('ingredients');
-        return view('recipes.recipe', compact('recipe'));
+
+        //Retrieve User's Selected Ingredients
+        $userIngredients = User::find(auth()->id())->selectedIngredients;
+        return view('recipes.recipe', compact('recipe', 'userIngredients'));
     }
 
     public function downloadPDF($id)

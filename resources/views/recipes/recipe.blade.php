@@ -17,7 +17,15 @@
               <h2 class="text-2xl font-semibold mb-4">Ingredients:</h2>
               <ul class="list-disc ml-6 mt-2">
                 @foreach($recipe->ingredients as $ingredient)
-                  <li>{{ $ingredient->name }}</li>
+                  <!-- Display available ingredients first and in green, the rest in orange -->
+                  @if ($userIngredients->contains($ingredient->id))
+                    <li class="text-green-500">{{ $ingredient->name }}</li>
+                  @endif
+                @endforeach
+                @foreach($recipe->ingredients as $ingredient)
+                  @if (!$userIngredients->contains($ingredient->id))
+                    <li class="text-orange-500">{{ $ingredient->name }}</li>
+                  @endif
                 @endforeach
               </ul>
             </div>
