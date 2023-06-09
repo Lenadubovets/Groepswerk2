@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Dompdf\Dompdf;
 use App\Models\Recipe;
+use App\Models\Ingredient;
+use App\Models\User;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +32,10 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::findOrFail($id);
         $recipe->load('ingredients');
-        return view('recipes.recipe', compact('recipe'));
+
+        //Retrieve User's Selected Ingredients
+        $userIngredients = User::find(auth()->id())->selectedIngredients;
+        return view('recipes.recipe', compact('recipe', 'userIngredients'));
     }
 
     public function downloadPDF($id)
@@ -45,6 +50,30 @@ class RecipeController extends Controller
         return $dompdf->stream('recipe.pdf');
     }
 
-    
+    public function search()
+{
+    // Retrieve User's Ingredients
+    $userIngredients = User::find(auth()->id())->selectedIngredients;
+
+    // Find recipes that have the user's ingredients
+    $recipes = DB::table('ingredient_recipe')
+        ->select('ingredient_recipe.recipe_id', DB::raw('count(*) as ingredient_count'))
+        ->whereIn('ingredient_recipe.ingredient_id', $userIngredients)
+        ->groupBy('ingredient_recipe.recipe_id')
+        ->orderByDesc('ingredient_count')
+        ->get();
+
+    // Get the recipe details based on the recipe ID
+    $recipeIds = $recipes->pluck('recipe_id')->toArray();
+
+    // Get recipes in the order of $recipeIds
+    $recipeDetails = Recipe::whereIn('id', $recipeIds)
+        ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $recipeIds) . ")"))
+        ->get();
+
+    // Pass to the view
+    return view('recipes.search', ['recipes' => $recipeDetails]);
+}
+
 
 }

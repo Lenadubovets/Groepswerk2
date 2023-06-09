@@ -39,7 +39,8 @@ Route::get('/recipes', [RecipeController::class, 'index'])
     ->middleware('auth')
     ->name('recipes.index');
 
- //single recipe
+
+//single recipe
 Route::get('/recipe/{id}', [RecipeController::class, 'show'])
     ->name('recipes.show');
 
@@ -48,6 +49,9 @@ Route::get('/recipes/{id}/download', [RecipeController::class, 'downloadPDF'])
     ->middleware('auth')
     ->name('recipes.download');
 
+////Search for recipes based on ingredients////
+//Search for recipes
+Route::get('/recipes/search', [RecipeController::class, 'search'])->name('recipes.search')->middleware('auth');
 
 //add ingredients to recipe
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
