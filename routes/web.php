@@ -64,7 +64,10 @@ Route::post('/ingredients/{ingredient}/add-to-selected', [IngredientController::
 
 Route::delete('/ingredients/{id}/delete', [IngredientController::class, 'delete'])->name('ingredients.delete');
 
-
+//more.blade
+Route::get('/more', function () {
+    return view('more');
+});
 
 // //Add to shopping list
 // Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToFridgelist'])->name('ingredient.moveToFridgeList');

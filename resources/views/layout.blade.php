@@ -27,32 +27,33 @@
             font-family: 'Urbanist', sans-serif;
             font-weight: 300; /* Light (300) weight */
         }
-
+    
         /* Your other styles */
         .header {
             font-family: 'Urbanist', sans-serif;
             font-weight: 300; /* Light (300) weight */
-            font-size: 36px; /* Increase the font size */
+            font-size: 48px; /* Increase the font size */
         }
-
+    
         .highlight {
             font-family: 'Urbanist', sans-serif;
             font-weight: 300; /* Light (300) weight */
         }
-
+    
         code {
             font-family: 'Urbanist', sans-serif;
             font-weight: 300; /* Light (300) weight */
         }
-
+    
         .fancy {
             font-family: 'Urbanist', sans-serif;
             font-weight: 300; /* Light (300) weight */
         }
-
+    
         .text {
             font-family: 'Urbanist', sans-serif;
             font-weight: 300; /* Light (300) weight */
+            font-size: 18px; /* Increase the font size */
         }
     </style>
 </head>
