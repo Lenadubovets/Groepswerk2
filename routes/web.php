@@ -76,7 +76,7 @@ Route::get('/shoppinglist', [ShoppingListController::class, 'show'])->name('shop
 Route::delete('/shoppinglist/{ingredientId}', [ShoppingListController::class, 'delete'])->name('shoppinglist.remove')->middleware('auth');
 
 //Add To Shopping List
-Route::post('/shoppinglist', [ShoppingListController::class, 'store'])->name('shoppinglist.store')->middleware('auth');
+Route::post('/shoppinglist/{id}', [ShoppingListController::class, 'store'])->name('shoppinglist.store')->middleware('auth');
 
 //more.blade
 Route::get('/more', function () {

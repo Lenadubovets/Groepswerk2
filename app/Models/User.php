@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Ingredient;
 
 class User extends Authenticatable
 {
@@ -42,16 +43,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class)->withPivot('list');
+    }
     public function selectedIngredients()
     {
         return $this->belongsToMany(Ingredient::class, 'ingredient_user', 'user_id', 'ingredient_id')
-            ->select('ingredients.*')
-            ->withPivot('user_id', 'ingredient_id');
+            ->withPivot('list')
+            ->select('ingredients.*');
     }
 
     public function getSelectedIngredientsAttribute()
     {
         return $this->selectedIngredients()->pluck('id');
+    }
+
+    public function addIngredientToList(Ingredient $ingredient, $list)
+    {
+        $this->ingredients()->attach($ingredient->id, ['list' => $list]);
     }
 
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class ShoppingListController extends Controller
 {
@@ -37,4 +39,16 @@ class ShoppingListController extends Controller
     }
 
     //Add To Shopping List
+    public function store(Request $request, $id)
+    {
+        //Find the ingredient based on $id
+        $ingredient = Ingredient::findOrFail($id);
+
+        $list = $request->input('list');
+
+        $user = auth()->user();
+        $user->addIngredientToList($ingredient, $list);
+
+        return redirect()->route('shoppinglist.index')->with('message', 'Ingredient added successfully!');
+    }
 }
