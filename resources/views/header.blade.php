@@ -29,7 +29,7 @@
                                 </span>
                             </div>
                             <div class="hidden lg:flex lg:gap-x-12">
-                                <a href="/" class="text-sm font-semibold leading-6 text-gray-900"><i
+                                <a href="/shoppinglist" class="text-sm font-semibold leading-6 text-gray-900"><i
                                         class="fa-solid fa-cart-shopping"></i> Shopping List </a>
                                 <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"><i
                                         class="fa-solid fa-heart"></i> Recipes </a>

@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\Redirect;
 
 class IngredientController extends Controller
 {
+    public function index()
+    {
+        $searchData = $this->search(request());
+        $showData = $this->show();
+
+        $ingredients = $searchData['ingredients'];
+        $selectedIngredients = $searchData['selectedIngredients'];
+        $fridgeListIngredients = $showData['fridgeListIngredients'];
+
+        return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'fridgeListIngredients'));
+    }
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -24,7 +36,21 @@ class IngredientController extends Controller
         $user = auth()->user();
         $selectedIngredients = $user->selectedIngredients;
 
-        return view('ingredients.search', compact('ingredients', 'selectedIngredients'));
+        return ['ingredients' => $ingredients, 'selectedIngredients' => $selectedIngredients];
+    }
+
+    public function show()
+    {
+        $user = auth()->user();
+        $fridgeListIngredients = DB::table('ingredient_user')
+            ->where('user_id', $user->id)
+            ->where('list', 'fridgeList')
+            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->select('ingredients.*')
+            ->get();
+
+        return ['fridgeListIngredients' => $fridgeListIngredients];
+
     }
 
     public function addToSelected(Request $request, Ingredient $ingredient)
@@ -49,7 +75,7 @@ class IngredientController extends Controller
         return redirect()->back()->with('message', 'Ingredient removed successfully');
     }
 
-    
+
 }
 // public function moveToFridgeList($id)
 // {

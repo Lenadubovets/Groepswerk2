@@ -27,7 +27,7 @@ use TCG\Voyager\Facades\Voyager;
 Route::get('/', function () {
     //If user is logged in, redirect to their Freego
     if (auth()->check()) {
-        return redirect()->route('ingredients.search');
+        return redirect()->route('ingredients.index');
         //Show generic welcome message to guests
     } else {
         return view('welcome');
@@ -63,7 +63,7 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 //Search ingredients
-Route::get('/ingredients', [IngredientController::class, 'search'])->name('ingredients.search')->middleware('auth');
+Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index')->middleware('auth');
 
 Route::post('/ingredients/{ingredient}/add-to-selected', [IngredientController::class, 'addToSelected'])->name('ingredients.addToSelected');
 
