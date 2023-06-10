@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\ShoppingListController;
 use TCG\Voyager\Facades\Voyager;
 
 
@@ -69,10 +70,13 @@ Route::post('/ingredients/{ingredient}/add-to-selected', [IngredientController::
 Route::delete('/ingredients/{id}/delete', [IngredientController::class, 'delete'])->name('ingredients.delete');
 
 //Show Shopping List
-Route::get('/shoppinglist', [IngredientController::class, 'showShoppingList'])->name('shoppinglist.index')->middleware('auth');
+Route::get('/shoppinglist', [ShoppingListController::class, 'show'])->name('shoppinglist.index')->middleware('auth');
 
 //Remove From Shopping List
-Route::delete('/shoppinglist/{ingredientId}', [IngredientController::class, 'removeFromShoppingList'])->name('shoppinglist.remove')->middleware('auth');
+Route::delete('/shoppinglist/{ingredientId}', [ShoppingListController::class, 'delete'])->name('shoppinglist.remove')->middleware('auth');
+
+//Add To Shopping List
+Route::post('/shoppinglist', [ShoppingListController::class, 'store'])->name('shoppinglist.store')->middleware('auth');
 
 //more.blade
 Route::get('/more', function () {

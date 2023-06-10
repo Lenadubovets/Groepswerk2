@@ -49,32 +49,7 @@ class IngredientController extends Controller
         return redirect()->back()->with('message', 'Ingredient removed successfully');
     }
 
-    public function showShoppingList()
-    {
-        $user = auth()->user();
-        $shoppingListIngredients = DB::table('ingredient_user')
-            ->where('user_id', $user->id)
-            ->where('list', 'shoppingList')
-            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
-            ->select('ingredients.*')
-            ->get();
-
-        return view('shoppinglist.index', compact('shoppingListIngredients'));
-
-    }
-
-    public function removeFromShoppingList($ingredientId)
-    {
-        $user = auth()->user();
-        DB::table('ingredient_user')
-            ->where('user_id', $user->id)
-            ->where('ingredient_id', $ingredientId)
-            ->where('list', 'shoppingList')
-            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
-            ->delete();
-
-        return redirect()->route('shoppinglist.index')->with('message', 'Ingredient removed successfully!');
-    }
+    
 }
 // public function moveToFridgeList($id)
 // {
