@@ -47,7 +47,7 @@ class ShoppingListController extends Controller
         $list = $request->input('list');
 
         $user = auth()->user();
-        $user->addIngredientToList($ingredient, $list);
+        $ingredient->users()->attach($user->id, ['list' => $list]);
 
         return redirect()->route('shoppinglist.index')->with('message', 'Ingredient added successfully!');
     }

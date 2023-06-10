@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class IngredientController extends Controller
 {
+    //Combine 2 views
     public function index()
     {
         $searchData = $this->search(request());
@@ -39,6 +40,7 @@ class IngredientController extends Controller
         return ['ingredients' => $ingredients, 'selectedIngredients' => $selectedIngredients];
     }
 
+    //Show Items in User's Freego
     public function show()
     {
         $user = auth()->user();
@@ -52,39 +54,16 @@ class IngredientController extends Controller
         return ['fridgeListIngredients' => $fridgeListIngredients];
 
     }
-
-    public function addToSelected(Request $request, Ingredient $ingredient)
+    //Add to Freego
+    public function store(Request $request)
     {
+        $ingredient = Ingredient::findOrFail($request->input('ingredient'));
+        $list = $request->input('list');
+
         $user = auth()->user();
+        $ingredient->users()->attach($user->id, ['list' => $list]);
 
-        if ($user->selectedIngredients()->where('ingredients.id', $ingredient->id)->exists()) {
-            return redirect()->route('ingredients.search')->with('message', 'You already have this ingredient');
-        }
-
-        $user->selectedIngredients()->attach($ingredient->id);
-
-        return redirect()->route('ingredients.search');
+        return redirect()->refresh()->with('message', 'Ingredient added successfully!');
     }
-
-
-    public function delete($id)
-    {
-        $user = auth()->user();
-        $user->selectedIngredients()->detach($id);
-
-        return redirect()->back()->with('message', 'Ingredient removed successfully');
-    }
-
 
 }
-// public function moveToFridgeList($id)
-// {
-//     // Find ingredient by id
-//     $ingredient = Ingredient::find($id);
-
-//     // Move the ingredient to the fridge list
-//     $ingredient->list_id = $fridgeList->id;
-//     $ingredient->save();
-
-//         return redirect()->back()->with('message', 'Ingredient moved successfully');
-// }

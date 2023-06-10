@@ -65,7 +65,7 @@ Route::group(['prefix' => 'admin'], function () {
 //Search ingredients
 Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index')->middleware('auth');
 
-Route::post('/ingredients/{ingredient}/add-to-selected', [IngredientController::class, 'addToSelected'])->name('ingredients.addToSelected');
+Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
 
 Route::delete('/ingredients/{id}/delete', [IngredientController::class, 'delete'])->name('ingredients.delete');
 

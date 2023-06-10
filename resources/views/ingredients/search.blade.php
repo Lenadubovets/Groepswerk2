@@ -15,8 +15,9 @@
                 @foreach ($ingredients as $ingredient)
                     <li class="mb-2">
                         {{ $ingredient->name }}
-                        <form action="{{ route('ingredients.addToSelected', $ingredient) }}" method="POST" class="inline">
+                        <form action="{{ route('ingredients.store', ['ingredient' => $ingredient->id]) }}" method="POST" class="inline">
                             @csrf
+                            <input type="hidden" name="list" value="fridgeList">
                             <button type="submit" class="text-xs text-white bg-blue-500 hover:bg-blue-700 rounded-lg px-2 py-1">Add to List</button>
                         </form>
                     </li>

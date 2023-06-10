@@ -45,24 +45,10 @@ class User extends Authenticatable
 
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class)->withPivot('list');
-    }
-    public function selectedIngredients()
-    {
         return $this->belongsToMany(Ingredient::class, 'ingredient_user', 'user_id', 'ingredient_id')
-            ->withPivot('list')
-            ->select('ingredients.*');
+            ->withPivot('list');
     }
 
-    public function getSelectedIngredientsAttribute()
-    {
-        return $this->selectedIngredients()->pluck('id');
-    }
-
-    public function addIngredientToList(Ingredient $ingredient, $list)
-    {
-        $this->ingredients()->attach($ingredient->id, ['list' => $list]);
-    }
 
 
 
