@@ -66,4 +66,17 @@ class IngredientController extends Controller
         return redirect()->refresh()->with('message', 'Ingredient added successfully!');
     }
 
+    public function delete($id)
+    {
+        $user = auth()->user();
+        DB::table('ingredient_user')
+            ->where('user_id', $user->id)
+            ->where('ingredient_id', $id)
+            ->where('list', 'fridgeList')
+            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->delete();
+
+        return redirect()->route('ingredients.index')->with('message', 'Ingredient removed successfully!');
+    }
+
 }
