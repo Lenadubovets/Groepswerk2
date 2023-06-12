@@ -1,8 +1,4 @@
-
-
-
-
-        <h1 class="text-3xl font-bold mb-6 mt-6">Your FREEGO Ingredients</h1>
+<h1 class="text-3xl font-bold mb-6 mt-6">Your FREEGO Ingredients</h1>
 
         <form action="" method="GET" class="mb-6 flex items-center">
             <input type="text" name="query" placeholder="Search for ingredients..." class="py-2 px-4 rounded-md border border-gray-300 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
