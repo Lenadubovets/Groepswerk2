@@ -34,8 +34,21 @@ class RecipeController extends Controller
         $recipe->load('ingredients');
 
         //Retrieve User's Selected Ingredients
-        $userIngredients = auth()->user()->getFridgeListIngredients();
-        return view('recipes.recipe', compact('recipe', 'userIngredients'));
+        $userFridgeListIngredients = auth()->user()->getFridgeListIngredients();
+        $userShoppingListIngredients = auth()->user()->getShoppingListIngredients();
+
+        //Sort the ingredients
+        $sortedIngredients = $recipe->ingredients->sortBy(function ($ingredient) use ($userShoppingListIngredients, $userFridgeListIngredients){
+            if ($userShoppingListIngredients->contains($ingredient->id)){
+                return 1;
+            } elseif ($userFridgeListIngredients->contains($ingredient->id)){
+                return 0;
+            } else {
+                return 2;
+            }
+        });
+
+        return view('recipes.recipe', compact('recipe', 'sortedIngredients', 'userShoppingListIngredients', 'userFridgeListIngredients'));
     }
 
     public function downloadPDF($id)
