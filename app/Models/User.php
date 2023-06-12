@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Ingredient;
 
-class User extends Authenticatable
+// class User extends Authenticatable
+class User extends \TCG\Voyager\Models\User
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -54,9 +55,19 @@ class User extends Authenticatable
     public function getFridgeListIngredients()
     {
         return DB::table('ingredient_user')
-        ->where('user_id', $this->id)
-        ->where('list', 'fridgeList')
-        ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
-        ->pluck('ingredients.id');
+            ->where('user_id', $this->id)
+            ->where('list', 'fridgeList')
+            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->pluck('ingredients.id');
+    }
+
+    //Get User's Shopping List Items
+    public function getShoppingListIngredients()
+    {
+        return DB::table('ingredient_user')
+            ->where('user_id', $this->id)
+            ->where('list', 'shoppingList')
+            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->pluck('ingredients.id');
     }
 }

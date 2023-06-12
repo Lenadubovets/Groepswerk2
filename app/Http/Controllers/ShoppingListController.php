@@ -22,6 +22,7 @@ class ShoppingListController extends Controller
 
         return view('shoppinglist.index', compact('shoppingListIngredients'));
 
+        
     }
 
     //Remove From Shopping List
@@ -41,14 +42,22 @@ class ShoppingListController extends Controller
     //Add To Shopping List
     public function store(Request $request, $id)
     {
-        //Find the ingredient based on $id
+        // Find the ingredient based on $id
         $ingredient = Ingredient::findOrFail($id);
 
-        $list = $request->input('list');
-
+        $list = 'shoppingList';
         $user = auth()->user();
+        $existingIngredient = $ingredient->users()->where('user_id', $user->id)->where('list', $list)->first();
+
+        if ($existingIngredient) {
+            $message = 'You already have this ingredient in your Shopping List.';
+            return response()->json(['success' => false, 'message' => $message]);
+        }
+
         $ingredient->users()->attach($user->id, ['list' => $list]);
 
-        return redirect()->route('shoppinglist.index')->with('message', 'Ingredient added successfully!');
+        $message = 'Ingredient added successfully!';
+        return response()->json(['success' => true, 'message' => $message]);
     }
+
 }

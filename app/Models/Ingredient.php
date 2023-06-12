@@ -9,20 +9,16 @@ class Ingredient extends Model
 {
     use HasFactory;
 
-    protected $table = 'ingredients';
-
-
-    protected $fillable = ['name'];
+    protected $guarded = [];
 
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('list');
     }
 
-
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class, 'ingredient_recipe', 'ingredient_id', 'recipe_id');
+        return $this->belongsToMany(Recipe::class);
     }
 
 }

@@ -24,13 +24,19 @@ use TCG\Voyager\Facades\Voyager;
 |
 */
 
+
 Route::get('/', function () {
-    //If user is logged in, redirect to their Freego
-    if (auth()->check()) {
-        return redirect()->route('ingredients.index');
-        //Show generic welcome message to guests
+    // If user is logged in and has the admin role, redirect to the Voyager admin panel
+    if (auth()->check() && auth()->user()->role_id === 1) {
+        return redirect(route('voyager.dashboard'));
     } else {
-        return view('welcome');
+        // If user is logged in, redirect to their Freego
+        if (auth()->check()) {
+            return redirect()->route('ingredients.index');
+        } else {
+            // Show generic welcome message to guests
+            return view('welcome');
+        }
     }
 });
 

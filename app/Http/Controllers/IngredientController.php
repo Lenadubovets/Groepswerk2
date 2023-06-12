@@ -64,6 +64,13 @@ class IngredientController extends Controller
         $list = $request->input('list');
 
         $user = auth()->user();
+
+
+        $existingIngredient = $ingredient->users()->where('user_id', $user->id)->where('list', $list)->first();
+
+        if ($existingIngredient) {
+            return redirect()->refresh()->with('message', 'You already have this ingredient in your Freego.');
+        }
         $ingredient->users()->attach($user->id, ['list' => $list]);
 
         return redirect()->refresh()->with('message', 'Ingredient added successfully!');
