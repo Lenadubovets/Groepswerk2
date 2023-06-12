@@ -27,14 +27,14 @@
   <p>No recipes found.</p>
 @else 
   @foreach($recipes as $recipe)
-      <div class="bg-gray-50 border border-gray-200 rounded p-6 flex">      
-        <div class="flex flex-col">
-          <h3 class="text-2xl">
-            <a href="/recipe/{{$recipe['id']}}">{{$recipe->name}}</a>
-          </h3>
-          <img src="{{ $recipe->image }}" alt="{{ $recipe->name }}" class="mt-4 mx-auto" style="max-width: 200px;">
-        </div>
-      </div>
+  <div class="bg-gray-50 border border-gray-200 rounded p-6 flex">
+    <div class="flex flex-col items-center"> <!-- Added 'items-center' class to center the content horizontally -->
+      <h3 class="text-2xl hover:text-blue-500">
+        <a href="/recipe/{{$recipe['id']}}">{{$recipe->name}}</a>
+      </h3>
+      <img src="{{ $recipe->image }}" alt="{{ $recipe->name }}" class="mt-4 mx-auto max-w-200">
+    </div>
+  </div>
     @endforeach
     @endif
   </div>
