@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 
-<form action="{{ route('recipes.index') }}" method="GET" class="mb-4">
+<form action="{{ route('recipes.index') }}" method="GET" class="mb-4 mt-12">
   <div class="relative border-2 border-gray-100 m-4 rounded-lg">
       <div class="absolute top-4 left-3">
           <i class="fa fa-search text-gray-400 z-20 hover:text-gray-500 test"></i></div>
@@ -27,8 +27,7 @@
   <p>No recipes found.</p>
 @else 
   @foreach($recipes as $recipe)
-      <div class="bg-gray-50 border border-gray-200 rounded p-6 flex">
-        {{-- <img class="w-48 mr-6 hidden md:block" src="{{asset('images/Syntra.jpg')}}"  alt="Teacher Image"> --}}
+      <div class="bg-gray-50 border border-gray-200 rounded p-6 flex">      
         <div class="flex flex-col">
           <h3 class="text-2xl">
             <a href="/recipe/{{$recipe['id']}}">{{$recipe->name}}</a>
