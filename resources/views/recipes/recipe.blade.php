@@ -16,30 +16,19 @@
                         <div class="p-6">
                             <h2 class="text-2xl font-semibold mb-4">Ingredients:</h2>
                             <ul class="list-disc ml-6 mt-2" style="list-style-type: none;">
-                                @foreach ($recipe->ingredients as $ingredient)
-                                    <!-- Display available ingredients first and in green, the rest in orange -->
-                                    @if ($userIngredients->contains($ingredient->id))
-                                        <li>
-                                            <label class="text-green-500">
-                                                <input type="checkbox" name="selectedIngredients[]"
-                                                    value="{{ $ingredient->id }}" disabled>
-                                                <span>{{ $ingredient->name }}</span>
-                                            </label>
-                                        </li>
-                                    @endif
-                                @endforeach
-                                @foreach ($recipe->ingredients as $ingredient)
-                                    @if (!$userIngredients->contains($ingredient->id))
-                                        <li>
-                                            <label class="text-orange-500">
-                                                <input type="checkbox" name="selectedIngredients[]"
-                                                    value="{{ $ingredient->id }}">
-                                                <span>{{ $ingredient->name }}</span>
-                                            </label>
-
-                                        </li>
-                                    @endif
-                                @endforeach
+                            @foreach ($sortedIngredients as $ingredient)
+                                <!-- Check if the ingredient is in the shopping list -->
+                                @php
+                                    $isInShoppingList = $userShoppingListIngredients->contains($ingredient->id);
+                                    $isUserIngredient = $userFridgeListIngredients->contains($ingredient->id);
+                                @endphp
+                                <li>
+                                    <label class="{{ $isInShoppingList ? 'text-blue-500' : ($isUserIngredient ? 'text-green-500' : 'text-orange-500') }}">
+                                        <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}" {{ $isInShoppingList || $isUserIngredient ? 'disabled' : '' }}>
+                                        <span>{{ $ingredient->name }}</span>
+                                    </label>
+                                </li>
+                            @endforeach
                             </ul>
                         </div>
                         <button id="add-selected-btn">Add to Shopping List</button>
@@ -64,38 +53,70 @@
     </div>
     </div>
 
-    <script>
+<script>
         $(document).ready(function() {
-            $('#add-selected-btn').click(function() {
-                var selectedIngredients = [];
-                $('input[name="selectedIngredients[]"]:checked').each(function() {
-                    selectedIngredients.push($(this).val());
-                });
+    $('#add-selected-btn').click(function() {
+        var selectedIngredients = [];
+        $('input[name="selectedIngredients[]"]:checked').each(function() {
+            selectedIngredients.push($(this).val());
+        });
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var completedRequests = 0;
+        var totalRequests = selectedIngredients.length;
+
+        //Send Ingredient ID to Laravel controller with AJAX 
+        $.each(selectedIngredients, function(index, ingredientId) {
+            $.ajax({
+                url: '/shoppinglist/' + ingredientId,
+                type: 'POST',
+                data: {
+                    ingredientId: ingredientId,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response);
+
+                    //If successful, disable checkbox and change color to blue
+                    if (response.success) {
+                        $('input[name="selectedIngredients[]"][value="' + ingredientId + '"]').attr('disabled', true)
+                            .siblings('span').addClass('text-blue-500').removeClass('text-orange-500');
+                    } else {
+                        // If not successful, show error message somehow (maybe in a flash-message box)
+                        $('.flash-message').html('<div class="fixed top-0 left-1/2 transform -translate-x-1/2 px-48 py-3"><p>' + response.message + '</p></div>');
                     }
-                });
-                
-                //Send Ingredient ID to Laravel controller with AJAX 
-                $.each(selectedIngredients, function(index, ingredientId) {
-                    $.ajax({
-                        url: '/shoppinglist/' + ingredientId,
-                        type: 'POST',
-                        data: {
-                            ingredientId: ingredientId
-                        },
-                        success: function(response) {
-                            console.log(response);
-                        },
-                        error: function(xhr) {
-                            console.error(xhr.responseText);
-                        }
-                    });
-                })
 
+                    //Increase the completed requests counter
+                    completedRequests++;
+
+                    // Check if all requests have completed
+                    if (completedRequests === totalRequests) {
+                        if (response.success) {
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000);
+                    }
+                }
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+
+                    //Increase the completed requests counter
+                    completedRequests++;
+
+                    // Check if all requests have completed
+                    if (completedRequests === totalRequests) {
+                        location.reload();
+                    }
+                }
             });
         });
-    </script>
+    });
+});
+</script>
 @endsection

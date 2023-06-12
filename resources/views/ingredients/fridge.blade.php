@@ -20,7 +20,7 @@
                     </td>
                     <td>
                         <div>
-                            <form action="{{ route('shoppinglist.store', $ingredient->id) }}" method="POST" class="inline">
+                            <form action="{{ route('shoppinglist.store', [$ingredient->id]) }}" method="POST" class="inline">
                                 @csrf
                                 @method('POST')
                                 <input type="hidden" name="list" value="shoppingList">
