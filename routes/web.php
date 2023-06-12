@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\ShoppingListController;
 use TCG\Voyager\Facades\Voyager;
 
 
@@ -26,7 +27,7 @@ use TCG\Voyager\Facades\Voyager;
 Route::get('/', function () {
     //If user is logged in, redirect to their Freego
     if (auth()->check()) {
-        return redirect()->route('ingredients.search');
+        return redirect()->route('ingredients.index');
         //Show generic welcome message to guests
     } else {
         return view('welcome');
@@ -49,8 +50,8 @@ Route::get('/recipes/{id}/download', [RecipeController::class, 'downloadPDF'])
     ->middleware('auth')
     ->name('recipes.download');
 
-////Search for recipes based on ingredients////
-//Search for recipes
+
+//Search for recipes based on ingredients
 Route::get('/recipes/search', [RecipeController::class, 'search'])->name('recipes.search')->middleware('auth');
 
 //add ingredients to recipe
@@ -62,11 +63,20 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 //Search ingredients
-Route::get('/ingredients', [IngredientController::class, 'search'])->name('ingredients.search')->middleware('auth');
+Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index')->middleware('auth');
 
-Route::post('/ingredients/{ingredient}/add-to-selected', [IngredientController::class, 'addToSelected'])->name('ingredients.addToSelected');
+Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
 
-Route::delete('/ingredients/{id}/delete', [IngredientController::class, 'delete'])->name('ingredients.delete');
+Route::delete('/ingredients/{id}', [IngredientController::class, 'delete'])->name('ingredients.delete');
+
+//Show Shopping List
+Route::get('/shoppinglist', [ShoppingListController::class, 'show'])->name('shoppinglist.index')->middleware('auth');
+
+//Remove From Shopping List
+Route::delete('/shoppinglist/{ingredientId}', [ShoppingListController::class, 'delete'])->name('shoppinglist.remove')->middleware('auth');
+
+//Add To Shopping List
+Route::post('/shoppinglist/{id}', [ShoppingListController::class, 'store'])->name('shoppinglist.store')->middleware('auth');
 
 //more.blade
 Route::get('/more', function () {

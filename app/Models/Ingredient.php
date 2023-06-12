@@ -16,9 +16,9 @@ class Ingredient extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'ingredient_user', 'ingredient_id', 'user_id');
+        return $this->belongsToMany(User::class)->withPivot('list');
     }
-    
+
 
     public function recipes()
     {
@@ -26,11 +26,3 @@ class Ingredient extends Model
     }
 
 }
-
-
- 
-
-
-
-
-

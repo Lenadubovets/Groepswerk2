@@ -34,7 +34,7 @@ class RecipeController extends Controller
         $recipe->load('ingredients');
 
         //Retrieve User's Selected Ingredients
-        $userIngredients = User::find(auth()->id())->selectedIngredients;
+        $userIngredients = auth()->user()->getFridgeListIngredients();
         return view('recipes.recipe', compact('recipe', 'userIngredients'));
     }
 
@@ -51,29 +51,36 @@ class RecipeController extends Controller
     }
 
     public function search()
-{
-    // Retrieve User's Ingredients
-    $userIngredients = User::find(auth()->id())->selectedIngredients;
+    {
 
-    // Find recipes that have the user's ingredients
-    $recipes = DB::table('ingredient_recipe')
-        ->select('ingredient_recipe.recipe_id', DB::raw('count(*) as ingredient_count'))
-        ->whereIn('ingredient_recipe.ingredient_id', $userIngredients)
-        ->groupBy('ingredient_recipe.recipe_id')
-        ->orderByDesc('ingredient_count')
-        ->get();
+        //Retrieve User's Ingredients
+        $userIngredients = auth()->user()->getFridgeListIngredients();
 
-    // Get the recipe details based on the recipe ID
-    $recipeIds = $recipes->pluck('recipe_id')->toArray();
 
-    // Get recipes in the order of $recipeIds
-    $recipeDetails = Recipe::whereIn('id', $recipeIds)
-        ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $recipeIds) . ")"))
-        ->get();
 
-    // Pass to the view
-    return view('recipes.search', ['recipes' => $recipeDetails]);
-}
+        // Find recipes that have the user's ingredients
+        $recipes = DB::table('ingredient_recipe')
+            ->select('ingredient_recipe.recipe_id', DB::raw('count(*) as ingredient_count'))
+            ->whereIn('ingredient_recipe.ingredient_id', $userIngredients)
+            ->groupBy('ingredient_recipe.recipe_id')
+            ->orderByDesc('ingredient_count')
+            ->get();
+
+        // Get the recipe details based on the recipe ID
+        $recipeIds = $recipes->pluck('recipe_id')->toArray();
+
+        // Get recipes in the order of $recipeIds
+        if (!empty($recipeIds)) {
+            $recipeDetails = Recipe::whereIn('id', $recipeIds)
+                ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $recipeIds) . ")"))
+                ->get();
+        } else {
+            $recipeDetails = collect(); // Return an empty collection if no recipes match
+        }
+
+        // Pass to the view
+        return view('recipes.search', ['recipes' => $recipeDetails, 'userIngredients' => $userIngredients]);
+    }
 
 
 }

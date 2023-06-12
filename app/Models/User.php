@@ -6,7 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Ingredient;
 
 class User extends Authenticatable
 {
@@ -42,19 +44,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function selectedIngredients()
+    public function ingredients()
     {
         return $this->belongsToMany(Ingredient::class, 'ingredient_user', 'user_id', 'ingredient_id')
-            ->select('ingredients.*')
-            ->withPivot('user_id', 'ingredient_id');
+            ->withPivot('list');
     }
 
-    public function getSelectedIngredientsAttribute()
+    //Get User's Freego Items
+    public function getFridgeListIngredients()
     {
-        return $this->selectedIngredients()->pluck('id');
+        return DB::table('ingredient_user')
+        ->where('user_id', $this->id)
+        ->where('list', 'fridgeList')
+        ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+        ->pluck('ingredients.id');
     }
-
-
-
-
 }

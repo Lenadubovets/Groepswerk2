@@ -2,14 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ingredient;
 use App\Models\User;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class IngredientController extends Controller
 {
+    //Combine 2 views
+    public function index()
+    {
+        $searchData = $this->search(request());
+        $showData = $this->show();
+
+        $ingredients = $searchData['ingredients'];
+        $selectedIngredients = $searchData['selectedIngredients'];
+        $fridgeListIngredients = $showData['fridgeListIngredients'];
+
+        return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'fridgeListIngredients'));
+    }
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -23,39 +37,46 @@ class IngredientController extends Controller
         $user = auth()->user();
         $selectedIngredients = $user->selectedIngredients;
 
-        return view('ingredients.search', compact('ingredients', 'selectedIngredients'));
+        return ['ingredients' => $ingredients, 'selectedIngredients' => $selectedIngredients];
     }
 
-   public function addToSelected(Request $request, Ingredient $ingredient)
-{
-    $user = auth()->user();
-    
-    if ($user->selectedIngredients()->where('ingredients.id', $ingredient->id)->exists()) {
-        return redirect()->route('ingredients.search')->with('message', 'You already have this ingredient');
+    //Show Items in User's Freego
+    public function show()
+    {
+        $user = auth()->user();
+        $fridgeListIngredients = DB::table('ingredient_user')
+            ->where('user_id', $user->id)
+            ->where('list', 'fridgeList')
+            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->select('ingredients.*')
+            ->get();
+
+        return ['fridgeListIngredients' => $fridgeListIngredients];
+
     }
-    
-    $user->selectedIngredients()->attach($ingredient->id);
+    //Add to Freego
+    public function store(Request $request)
+    {
+        $ingredient = Ingredient::findOrFail($request->input('ingredient'));
+        $list = $request->input('list');
 
-    return redirect()->route('ingredients.search');
-}
+        $user = auth()->user();
+        $ingredient->users()->attach($user->id, ['list' => $list]);
 
-    
+        return redirect()->refresh()->with('message', 'Ingredient added successfully!');
+    }
+
     public function delete($id)
     {
         $user = auth()->user();
-        $user->selectedIngredients()->detach($id);
-    
-        return redirect()->back()->with('message', 'Ingredient removed successfully');
+        DB::table('ingredient_user')
+            ->where('user_id', $user->id)
+            ->where('ingredient_id', $id)
+            ->where('list', 'fridgeList')
+            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->delete();
+
+        return redirect()->route('ingredients.index')->with('message', 'Ingredient removed successfully!');
     }
+
 }
- // public function moveToFridgeList($id)
-    // {
-    //     // Find ingredient by id
-    //     $ingredient = Ingredient::find($id);
-
-    //     // Move the ingredient to the fridge list
-    //     $ingredient->list_id = $fridgeList->id;
-    //     $ingredient->save();
-
-    //         return redirect()->back()->with('message', 'Ingredient moved successfully');
-    // }
