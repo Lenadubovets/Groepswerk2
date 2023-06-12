@@ -47,6 +47,13 @@ class ShoppingListController extends Controller
         $list = 'shoppingList';
 
         $user = auth()->user();
+
+        $existingIngredient = $ingredient->users()->where('user_id', $user->id)->where('list', $list)->first();
+
+        if ($existingIngredient) {
+            return redirect()->route('ingredients.index')->with('message', 'You already have this ingredient in your Shopping List.');
+        }
+
         $ingredient->users()->attach($user->id, ['list' => $list]);
 
         return redirect()->route('shoppinglist.index')->with('message', 'Ingredient added successfully!');
