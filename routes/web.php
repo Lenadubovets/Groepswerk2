@@ -83,11 +83,6 @@ Route::get('/more', function () {
     return view('more');
 });
 
-// //Add to shopping list
-// Route::get('/ingredient/{id}/fridgelist', [IngredientController::class, 'moveToFridgelist'])->name('ingredient.moveToFridgeList');
-
-
-
 //Show register form
 Route::get('/register', [UserController::class, 'create']);
 
