@@ -2,7 +2,7 @@
 
 @section('content')
   @if($recipe)
-    <div class="max-w-6xl mx-auto bg-white shadow-md rounded-md overflow-hidden">
+    <div class="max-w-6xl mx-auto bg-white shadow-md rounded-md overflow-hidden mt-24">
       <div class="grid grid-cols-3 gap-4">
         <div class="col-span-1">
           <img src="{{ $recipe->image }}" alt="{{ $recipe->name }}" class="object-cover h-100 w-full">
