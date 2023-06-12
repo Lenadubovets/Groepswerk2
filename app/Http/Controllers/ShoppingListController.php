@@ -44,7 +44,7 @@ class ShoppingListController extends Controller
         //Find the ingredient based on $id
         $ingredient = Ingredient::findOrFail($id);
 
-        $list = $request->input('list');
+        $list = 'shoppingList';
 
         $user = auth()->user();
         $ingredient->users()->attach($user->id, ['list' => $list]);
