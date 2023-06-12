@@ -13,16 +13,19 @@ class IngredientController extends Controller
 {
     //Combine 2 views
     public function index()
-    {
-        $searchData = $this->search(request());
-        $showData = $this->show();
+{
+    $searchData = $this->search(request());
+    $showData = $this->show();
 
-        $ingredients = $searchData['ingredients'];
-        $selectedIngredients = $searchData['selectedIngredients'];
-        $fridgeListIngredients = $showData['fridgeListIngredients'];
+    $ingredients = $searchData['ingredients'];
+    $selectedIngredients = $searchData['selectedIngredients'];
+    
+    // Fetch the updated quantities
+    $fridgeListIngredients = $this->show()['fridgeListIngredients'];
 
-        return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'fridgeListIngredients'));
-    }
+    return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'fridgeListIngredients'));
+}
+
 
     public function search(Request $request)
     {
@@ -86,4 +89,21 @@ class IngredientController extends Controller
         return redirect()->route('ingredients.index')->with('message', 'Ingredient removed successfully!');
     }
 
+    public function updateQuantities(Request $request)
+    {
+        $quantities = $request->input('quantities');
+    
+        foreach ($quantities as $ingredientId => $quantity) {
+            DB::table('ingredient_user')
+                ->where('user_id', auth()->id())
+                ->where('ingredient_id', $ingredientId)
+                ->update(['quantity' => $quantity]);
+
+        // Store the quantity in the session
+        session(['ingredient_quantity_'.$ingredientId => $quantity]);
+        }
+    
+        return redirect()->route('ingredients.index')->with('success', 'Quantities updated successfully!');
+    }
+    
 }
