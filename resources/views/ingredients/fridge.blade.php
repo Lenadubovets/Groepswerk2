@@ -22,6 +22,7 @@
                         <div>
                             <form action="{{ route('shoppinglist.store', $ingredient->id) }}" method="POST" class="inline">
                                 @csrf
+                                @method('POST')
                                 <input type="hidden" name="list" value="shoppingList">
                                 <button class="text-xs text-white bg-blue-500 hover:bg-blue-700 rounded-lg px-2 py-1">
                                     <i class="fa-solid fa-cart-plus"></i>
