@@ -69,10 +69,10 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 //Search ingredients
-Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index')->middleware('auth');
+Route::get('/ingredients2', [IngredientController::class, 'index'])->name('ingredients.index')->middleware('auth');
 
 //Store ingredients
-Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
+Route::post('/ingredients2', [IngredientController::class, 'store'])->name('ingredients.store');
 
 //Delete ingredients
 Route::delete('/ingredients/{id}', [IngredientController::class, 'delete'])->name('ingredients.delete');
