@@ -47,11 +47,28 @@
         <a href="{{ route('recipes.download', $recipe->id) }}" class="text-blue-500 hover:underline mr-4">
             Download PDF
         </a>
-        <button onclick="window.print()" class="text-blue-500 hover:underline">
+        <button onclick="printRecipe()" class="text-blue-500 hover:underline">
             Print Recipe
         </button>
     </div>
-    </div>
+    
+    <script>
+        function printRecipe() {
+            // Hide elements that should not be printed
+            var elementsToHide = document.querySelectorAll('#headertop, mobileheader');
+            elementsToHide.forEach(function(element) {
+                element.style.display = 'none';
+            });
+
+            // Trigger the browser's print functionality
+            window.print();
+
+            // Restore the hidden elements after printing
+            elementsToHide.forEach(function(element) {
+                element.style.display = '';
+            });
+        }
+    </script>
 
 <script>
         $(document).ready(function() {

@@ -1,4 +1,4 @@
-<header class="absolute inset-x-0 top-0 z-50">
+<header class="absolute inset-x-0 top-0 z-50" id="headertop">
 
                 <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                     <div class="flex lg:flex-1">
@@ -52,7 +52,7 @@
                     </div>
                 </nav>
                 <!-- Mobile menu, show/hide based on menu open state. -->
-                <div class="lg:hidden" role="dialog" aria-modal="true">
+                <div class="lg:hidden" role="dialog" aria-modal="true" id="mobileheader">
                     <!-- Background backdrop, show/hide based on slide-over state. -->
                     <div class="fixed inset-0 z-50"></div>
                     <div
