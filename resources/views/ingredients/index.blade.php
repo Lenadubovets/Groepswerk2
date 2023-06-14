@@ -22,7 +22,7 @@
         <div class="relative pl-16">
             <dt class="text-base font-semibold leading-7 text-gray-900">
                 <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500">
-                    <i class="fa-solid fa-clipboard-list text-black text-xl"></i>
+                    <i class="fa-solid fa-utensils text-black text-xl"></i>
                 </div>
                 <h2 class="text-2xl font-bold">What can you make?</h2>
             </dt>
