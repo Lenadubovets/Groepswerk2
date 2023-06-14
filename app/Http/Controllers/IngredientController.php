@@ -13,18 +13,21 @@ class IngredientController extends Controller
 {
     //Combine 2 views
     public function index()
-{
-    $searchData = $this->search(request());
-    $showData = $this->show();
+    {
+        $searchData = $this->search(request());
+        $showData = $this->show();
 
-    $ingredients = $searchData['ingredients'];
-    $selectedIngredients = $searchData['selectedIngredients'];
-    
-    // Fetch the updated quantities
-    $fridgeListIngredients = $this->show()['fridgeListIngredients'];
+        $ingredients = $searchData['ingredients'];
+        $selectedIngredients = $searchData['selectedIngredients'];
 
-    return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'fridgeListIngredients'));
-}
+        // Fetch the updated quantities
+        $fridgeListIngredients = $this->show()['fridgeListIngredients'];
+
+        //Fetch the ingredients that are in the shopping list
+        $shoppingListIngredientsIds = auth()->user()->ingredients()->wherePivot('list', 'shoppingList')->pluck('ingredients.id')->toArray();
+
+        return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'fridgeListIngredients', 'shoppingListIngredientsIds'));
+    }
 
 
     public function search(Request $request)
@@ -92,18 +95,18 @@ class IngredientController extends Controller
     public function updateQuantities(Request $request)
     {
         $quantities = $request->input('quantities');
-    
+
         foreach ($quantities as $ingredientId => $quantity) {
             DB::table('ingredient_user')
                 ->where('user_id', auth()->id())
                 ->where('ingredient_id', $ingredientId)
                 ->update(['quantity' => $quantity]);
 
-        // Store the quantity in the session
-        session(['ingredient_quantity_'.$ingredientId => $quantity]);
+            // Store the quantity in the session
+            session(['ingredient_quantity_' . $ingredientId => $quantity]);
         }
-    
+
         return redirect()->route('ingredients.index')->with('success', 'Quantities updated successfully!');
     }
-    
+
 }
