@@ -69,10 +69,10 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 //Search ingredients
-Route::get('/ingredients2', [IngredientController::class, 'index'])->name('ingredients.index')->middleware('auth');
+Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index')->middleware('auth');
 
 //Store ingredients
-Route::post('/ingredients2', [IngredientController::class, 'store'])->name('ingredients.store');
+Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
 
 //Delete ingredients
 Route::delete('/ingredients/{id}', [IngredientController::class, 'delete'])->name('ingredients.delete');
@@ -87,7 +87,7 @@ Route::delete('/shoppinglist/{ingredientId}', [ShoppingListController::class, 'd
 Route::post('/shoppinglist/{id}', [ShoppingListController::class, 'store'])->name('shoppinglist.store')->middleware('auth');
 
 //Quantity ingredients
-Route::post('/ingredients', [IngredientController::class, 'updateQuantities'])->name('updateQuantities');
+Route::post('/ingredients/quantities', [IngredientController::class, 'updateQuantities'])->name('updateQuantities');
 
 //more.blade
 Route::get('/more', function () {

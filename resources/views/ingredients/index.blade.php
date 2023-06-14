@@ -16,7 +16,7 @@
                 <h2 class="text-2xl font-bold">Your FREEGO List</h2>
             </dt>
             <dd>
-                @include('ingredients.fridge', ['fridgeListIngredients' => $fridgeListIngredients])
+                @include('ingredients.fridge', ['fridgeListIngredients' => $fridgeListIngredients, 'shoppingListIngredientsIds' => $shoppingListIngredientsIds])
             </dd>
         </div>
         <div class="relative pl-16">
