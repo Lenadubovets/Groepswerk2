@@ -1,8 +1,23 @@
-<h1 class="text-3xl font-bold mb-6 mt-6">Your FREEGO Ingredients</h1>
+@extends('app')
 
-        <form action="" method="GET" class="mb-6 flex items-center">
-            <input type="text" name="query" placeholder="Search for ingredients..." class="py-2 px-4 rounded-md border border-gray-300 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Search</button>
+@section('section-search')
+
+        <form action="" method="GET">
+            <div class="mb-6 flex">
+                <input
+                  type="text"
+                  name="query"
+                  class="py-2 px-4 rounded-md border border-gray-300 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500 h-14 w-full pl-10 pr-10 z-0 focus:shadow"
+                  placeholder="Search for ingredients..."
+                />
+                <button
+                  type="submit"
+                  class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 h-14"
+                >
+                  Search
+                </button>
+              </div>
+              
         </form>
 
         @if ($ingredients->count() > 0)
@@ -23,3 +38,4 @@
             <p>No ingredients found.</p>
         @endif
  
+@endsection 
