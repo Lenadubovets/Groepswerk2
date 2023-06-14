@@ -1,4 +1,9 @@
+@extends ('app')
+
+@section('fridgeContent')
+
 <div>
+
     @if ($fridgeListIngredients->count() > 0)
         @if (session('success'))
             <div class="bg-green-200 text-green-800 rounded-md p-2 mb-4">
@@ -15,7 +20,7 @@
                     <tr>
                         <th>Ingredient</th>
                         <th>Quantity</th>
-                        <th></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -63,3 +68,4 @@
         <p>No ingredients added to the list.</p>
     @endif
 </div>
+@endsection
