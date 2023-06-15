@@ -30,9 +30,14 @@ public function index()
     $userController = new UserController();
     $favoritesData = $userController->favorites();
     $recipes = $favoritesData['recipes'];
+    //Fetch the ingredients that are in the shopping list
+     $shoppingListIngredientsIds = auth()->user()->ingredients()->wherePivot('list', 'shoppingList')->pluck('ingredients.id')->toArray();
 
-    return view('ingredients.index', compact('ingredients','selectedIngredients','recipes', 'fridgeListIngredients', 'searchData'));
+        
+
+    return view('ingredients.index', compact('ingredients','selectedIngredients','recipes', 'fridgeListIngredients', 'searchData','shoppingListIngredientsIds'));
 }
+
 
    
     public function search(Request $request)
