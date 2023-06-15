@@ -8,10 +8,15 @@
           <span style="color: red;">&hearts;</span>
           <a href="/recipe/{{$recipe->id}}">{{$recipe->name}}</a>
         </div>
-        <button class="text-xs text-white bg-red-500 hover:bg-red-700 rounded-lg px-2 py-1" onclick="">
-          <i class="fa-solid fa-trash"></i>
-        </button>
+        <form action="{{ route('recipes.destroy', $recipe->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this recipe?')">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="text-xs text-white bg-red-500 hover:bg-red-700 rounded-lg px-2 py-1">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </form>
       </li>
     @endforeach
   </ul>
 @endif
+
