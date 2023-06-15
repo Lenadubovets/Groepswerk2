@@ -60,6 +60,8 @@ Route::get('/recipes/{id}/download', [RecipeController::class, 'downloadPDF'])
 
 Route::post('/recipes/{recipe}/like', [RecipeController::class, 'like'])->name('recipes.like');
 
+//delete recipe from list of favorites
+Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
 
 
 //Search for recipes based on ingredients

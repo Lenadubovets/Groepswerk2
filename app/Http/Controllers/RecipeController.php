@@ -63,26 +63,32 @@ class RecipeController extends Controller
 
         return $dompdf->stream('recipe.pdf');
     }
-
-    //like recipe
-    // public function like(Recipe $recipe)
-    // {
-    //  $user = Auth::user();
-
-    //  $user->recipes()->attach($recipe);
-
-    // return redirect()->back()->with('success', 'Recipe liked successfully!');
-    // }
+    // Like recipe and push this to list with favorites recipes
     public function like(Recipe $recipe)
-{
-    $user = auth()->user();
-    $user->favoriteRecipes()->attach($recipe);
-    // dd($recipe);
+    {
+        $user = auth()->user();
 
-    return back()->with('success', 'Recipe added to favorites.');
-}
+        // Check if the recipe is already in the favorite list
+        if ($user->favoriteRecipes()->where('recipe_id', $recipe->id)->exists()) {
+          return back()->with('error', 'Recipe is already in favorites.');
+        }
+
+         // Attach the recipe to the favorite list
+        $user->favoriteRecipes()->attach($recipe);
+
+        return back()->with('success', 'Recipe added to favorites.');
+    }
 
 
+    //delete from favorites
+    public function destroy(Recipe $recipe)
+    {
+        // Detach the recipe from the authenticated user's favoriteRecipes relationship
+        auth()->user()->favoriteRecipes()->detach($recipe);
+    
+        return redirect()->back()->with('success', 'Recipe removed from favorites.');
+    }
+    
 
     public function search()
     {
