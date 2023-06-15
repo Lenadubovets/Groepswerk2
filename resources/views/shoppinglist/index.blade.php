@@ -14,14 +14,13 @@
                 <div class="col-span-8">
                     <!-- Show items in the shopping list -->
                     @foreach ($shoppingListIngredients as $ingredient)
-                        <form action="{{ route('shoppinglist.remove', $ingredient->id) }}" method="POST">
+                        <form action="{{ route('shoppinglist.remove') }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <div class="flex items-center">
-                                <input type="checkbox">
-                                <label class="ml-2">{{ $ingredient->name }}</label>
+                                <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}">
+                                <span class="ml-2">{{ $ingredient->name }}</span>
                             </div>
-                        </form>
                     @endforeach
                 </div>
                 <div class="col-span-4 flex flex-col justify-center">
@@ -29,6 +28,7 @@
                     <button type="submit"
                         class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Remove</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

@@ -86,7 +86,7 @@ Route::delete('/ingredients/{id}', [IngredientController::class, 'delete'])->nam
 Route::get('/shoppinglist', [ShoppingListController::class, 'show'])->name('shoppinglist.index')->middleware('auth');
 
 //Remove From Shopping List
-Route::delete('/shoppinglist/{ingredientId}', [ShoppingListController::class, 'delete'])->name('shoppinglist.remove')->middleware('auth');
+Route::delete('/shoppinglist', [ShoppingListController::class, 'delete'])->name('shoppinglist.remove')->middleware('auth');
 
 //Add To Shopping List
 Route::post('/shoppinglist/{id}', [ShoppingListController::class, 'store'])->name('shoppinglist.store')->middleware('auth');
