@@ -22,7 +22,7 @@ class ShoppingListController extends Controller
 
         return view('shoppinglist.index', compact('shoppingListIngredients'));
 
-        
+
     }
 
     //Remove From Shopping List
@@ -49,15 +49,14 @@ class ShoppingListController extends Controller
         $user = auth()->user();
         $existingIngredient = $ingredient->users()->where('user_id', $user->id)->where('list', $list)->first();
 
-        if ($existingIngredient) {
-            $message = 'You already have this ingredient in your Shopping List.';
-            return response()->json(['success' => false, 'message' => $message]);
-        }
 
         $ingredient->users()->attach($user->id, ['list' => $list]);
 
         $message = 'Ingredient added successfully!';
-        return response()->json(['success' => true, 'message' => $message]);
+        return redirect()->route('ingredients.index')->with([
+            'message' => $message,
+            'existingIngredient' => $existingIngredient,
+        ]);
     }
 
 }

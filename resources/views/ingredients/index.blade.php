@@ -10,19 +10,19 @@
     <div class="mx-auto mt-16 max-w-7xl grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
         <div class="relative pl-16">
             <dt class="text-base font-semibold leading-7 text-gray-900">
-                <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500">
-                    <i class="fa-solid fa-clipboard-list text-black text-xl"></i>
+                <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600">
+                    <i class="fa-solid fa-clipboard-list text-white text-xl"></i>
                 </div>
                 <h2 class="text-2xl font-bold">Your FREEGO List</h2>
             </dt>
             <dd>
-                @include('ingredients.fridge', ['fridgeListIngredients' => $fridgeListIngredients])
+                @include('ingredients.fridge', ['fridgeListIngredients' => $fridgeListIngredients, 'shoppingListIngredientsIds' => $shoppingListIngredientsIds])
             </dd>
         </div>
         <div class="relative pl-16">
             <dt class="text-base font-semibold leading-7 text-gray-900">
-                <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500">
-                    <i class="fa-solid fa-clipboard-list text-black text-xl"></i>
+                <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600">
+                    <i class="fa-solid fa-utensils text-white text-xl"></i>
                 </div>
                 <h2 class="text-2xl font-bold">What can you make?</h2>
             </dt>
@@ -32,8 +32,8 @@
         </div>
         <div class="relative pl-16">
             <dt class="text-base font-semibold leading-7 text-gray-900">
-                <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500">
-                    <i class="fa-regular fa-thumbs-up text-black text-xl"></i>
+                <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600">
+                    <i class="fa-regular fa-thumbs-up text-white text-xl"></i>
                 </div>
                 <h2 class="text-2xl font-bold">Favorite recipes</h2>
             </dt>

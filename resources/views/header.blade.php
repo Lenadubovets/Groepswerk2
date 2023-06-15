@@ -24,22 +24,24 @@
                         
                         @auth()
                             <div class="hidden lg:flex lg:gap-x-12">
-                                <span class="font-bold uppercase px-12">
+                                <span class="font-bold lowercase px-12">
                                     Welcome {{ auth()->user()->name }}
                                 </span>
                             </div>
                             <div class="hidden lg:flex lg:gap-x-12">
-                                <a href="/shoppinglist" class="text-sm font-semibold leading-6 text-gray-900"><i
-                                        class="fa-solid fa-cart-shopping"></i> Shopping List </a>
-                                <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"><i
-                                        class="fa-solid fa-heart"></i> Recipes </a>
-                                <form class="inline text-sm font-semibold leading-6 text-gray-90" method="POST"
-                                    action="/logout">
+                                <a href="/shoppinglist" class="text-sm font-semibold leading-6 text-gray-900">
+                                    <i class="fa-solid fa-cart-shopping text-indigo-600"></i> Shopping List
+                                </a>
+                                <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900">
+                                    <i class="fa-solid fa-plate-wheat text-indigo-600"></i> Recipes
+                                </a>
+                                <form class="inline text-sm font-semibold" method="POST" action="/logout">
                                     @csrf
                                     <button type="submit">
-                                        <i class="fa-solid fa-door-closed">Logout</i>
+                                      <i class="fa-solid fa-right-from-bracket text-indigo-600"></i>
+                                      <span class="text-black lowercase">Logout</span>
                                     </button>
-                                </form>
+                                  </form>
                             </div>
 
                             {{-- If not logged in, show default links --}}
@@ -78,10 +80,10 @@
                                     <a href="#"
                                         class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                                         Your Freego </a>
-                                    <a href="#"
+                                    <a href="/shoppinglist"
                                         class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                                         <i class="fa-solid fa-cart-shopping"></i></a>
-                                    <a href="#"
+                                    <a href="/recipes"
                                         class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Recipes</a>
                                     <a href="#"
                                         class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"><i
@@ -121,11 +123,9 @@
                                 <a href="/ingredients" class="text-sm font-semibold leading-6 text-gray-900"> Your
                                     Freego
                                 </a>
-                                <a href="" class="text-sm font-semibold leading-6 text-gray-900"><i
-                                        class="fa-solid fa-cart-shopping"></i> </a>
+                                <a href="/shoppinglist" class="text-sm font-semibold leading-6 text-gray-900"><i class="fa-solid fa-cart-shopping text-indigo-600"></i><a>
                                 <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"> Recipes </a>
-                                <a href="#" class="text-sm font-semibold leading-6 text-gray-900"><i
-                                        class="fa-solid fa-heart"></i></a>
+                                <a href="#" class="text-sm font-semibold leading-6 text-gray-900"><i class="fa-solid fa-heart"></i></a>
                             </div>
                             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                                 <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
@@ -159,17 +159,18 @@
                                 <div class="mt-6 flow-root">
                                     <div class="-my-6 divide-y divide-gray-500/10">
                                         <div class="space-y-2 py-6">
-                                            <a href="/"
+                                            <a href="/ingredients"
                                                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                                                 Your Freego </a>
-                                            <a href="#"
+                                            <a href="/shoppinglist"
                                                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                                <i class="fa-solid fa-cart-shopping"></i></a>
-                                            <a href="/"
-                                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Recipes</a>
+                                                <i class="fa-solid fa-cart-shopping text-indigo-600 "></i> Shopping List</a>
+                                            <a href="/recipes"
+                                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"> <i class="fa-solid fa-plate-wheat text-indigo-600"></i>
+                                                Recipes</a>
                                             <a href="#"
                                                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"><i
-                                                    class="fa-solid fa-heart"></i> </a>
+                                                    class="fa-solid fa-heart text-indigo-600"></i> Favorites </a>
                                         </div>
                                         <div class="py-6">
                                             <a href="#"

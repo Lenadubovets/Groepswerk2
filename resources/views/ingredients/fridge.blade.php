@@ -38,9 +38,15 @@
                                                 <form action="{{ route('shoppinglist.store', $ingredient->id) }}" method="POST" class="inline">
                                                     @csrf
                                                     <input type="hidden" name="list" value="shoppingList">
-                                                    <button class="text-xs text-white bg-blue-500 hover:bg-blue-700 rounded-lg px-2 py-1">
-                                                        <i class="fa-solid fa-cart-plus"></i>
-                                                    </button>
+                                                    @if(in_array($ingredient->id, $shoppingListIngredientsIds))
+                                                        <button class="text-xs text-white bg-gray-300 rounded-lg px-2 py-1" disabled>
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                        </button>
+                                                    @else
+                                                        <button class="text-xs text-white bg-blue-500 hover:bg-indigo-600 rounded-lg px-2 py-1">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                        </button>
+                                                    @endif
                                                 </form>
                                                 <form action="{{ route('ingredients.delete', ['id' => $ingredient->id]) }}" method="POST" class="inline">
                                                     @csrf
@@ -52,8 +58,8 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
-                            </tbody>
+                            @endforeach
+                                                        </tbody>
                         </table>
                     </div>
                     <button type="submit" class="text-xs text-white bg-green-500 hover:bg-green-700 rounded-lg px-2 py-1 mt-4">Save Quantities</button>

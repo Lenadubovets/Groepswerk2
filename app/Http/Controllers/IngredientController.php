@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 class IngredientController extends Controller
 {
 
+
 //Combine 3 views
 public function index()
 {
@@ -33,7 +34,7 @@ public function index()
     return view('ingredients.index', compact('ingredients','selectedIngredients','recipes', 'fridgeListIngredients', 'searchData'));
 }
 
-
+   
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -99,18 +100,18 @@ public function index()
     public function updateQuantities(Request $request)
     {
         $quantities = $request->input('quantities');
-    
+
         foreach ($quantities as $ingredientId => $quantity) {
             DB::table('ingredient_user')
                 ->where('user_id', auth()->id())
                 ->where('ingredient_id', $ingredientId)
                 ->update(['quantity' => $quantity]);
 
-        // Store the quantity in the session
-        session(['ingredient_quantity_'.$ingredientId => $quantity]);
+            // Store the quantity in the session
+            session(['ingredient_quantity_' . $ingredientId => $quantity]);
         }
-    
+
         return redirect()->route('ingredients.index')->with('success', 'Quantities updated successfully!');
     }
-    
+
 }
