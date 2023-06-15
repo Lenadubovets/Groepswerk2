@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 
 use Dompdf\Dompdf;
-use App\Models\Recipe;
-use App\Models\Ingredient;
 use App\Models\User;
+use App\Models\Recipe;
 use Barryvdh\DomPDF\PDF;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class RecipeController extends Controller
@@ -62,6 +63,26 @@ class RecipeController extends Controller
 
         return $dompdf->stream('recipe.pdf');
     }
+
+    //like recipe
+    // public function like(Recipe $recipe)
+    // {
+    //  $user = Auth::user();
+
+    //  $user->recipes()->attach($recipe);
+
+    // return redirect()->back()->with('success', 'Recipe liked successfully!');
+    // }
+    public function like(Recipe $recipe)
+{
+    $user = auth()->user();
+    $user->favoriteRecipes()->attach($recipe);
+    // dd($recipe);
+
+    return back()->with('success', 'Recipe added to favorites.');
+}
+
+
 
     public function search()
     {

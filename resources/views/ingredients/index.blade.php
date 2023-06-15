@@ -38,7 +38,7 @@
                 <h2 class="text-2xl font-bold">Favorite recipes</h2>
             </dt>
             <dd class="mt-2 text-base leading-7 text-gray-600">
-                @include('ingredients.favorites')
+                @include('ingredients.favorites', ['recipes' => $recipes])
             </dd> 
         </div>
     </div>

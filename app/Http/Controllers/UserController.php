@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -73,4 +75,17 @@ class UserController extends Controller
         //If Login Fails
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
+
+    public function favorites()
+    {
+        $user = auth()->user();
+        $recipes = $user->favoriteRecipes()->get(); // or $user->favoriteRecipes()->paginate(10);
+    
+        // dd($recipes);
+    
+        return view('ingredients.index', ['recipes' => $recipes]);
+    }
+    
+    
+    
 }

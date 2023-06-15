@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Recipe;
+use App\Models\Ingredient;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
-use Laravel\Sanctum\HasApiTokens;
-use App\Models\Ingredient;
 
 // class User extends Authenticatable
 class User extends \TCG\Voyager\Models\User
@@ -70,4 +71,11 @@ class User extends \TCG\Voyager\Models\User
             ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
             ->pluck('ingredients.id');
     }
+
+    public function favoriteRecipes()
+    {
+    return $this->belongsToMany(Recipe::class);
+    }
+
+
 }

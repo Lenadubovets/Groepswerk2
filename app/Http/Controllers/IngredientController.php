@@ -7,29 +7,34 @@ use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
 
 class IngredientController extends Controller
 {
-    //Combine 2 views
-    public function index()
-    {
-        $searchData = $this->search(request());
-        $showData = $this->show();
-
-        $ingredients = $searchData['ingredients'];
-        $selectedIngredients = $searchData['selectedIngredients'];
-
-        // Fetch the updated quantities
-        $fridgeListIngredients = $this->show()['fridgeListIngredients'];
-
-        //Fetch the ingredients that are in the shopping list
-        $shoppingListIngredientsIds = auth()->user()->ingredients()->wherePivot('list', 'shoppingList')->pluck('ingredients.id')->toArray();
-
-        return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'fridgeListIngredients', 'shoppingListIngredientsIds'));
-    }
 
 
+//Combine 3 views
+public function index()
+{
+    $searchData = $this->search(request());
+    $showData = $this->show();
+
+    $ingredients = $searchData['ingredients'];
+    $selectedIngredients = $searchData['selectedIngredients'];
+    
+    // Fetch the updated quantities
+    $fridgeListIngredients = $showData['fridgeListIngredients'];
+
+    // Retrieve favorite recipes from UserController
+    $userController = new UserController();
+    $favoritesData = $userController->favorites();
+    $recipes = $favoritesData['recipes'];
+
+    return view('ingredients.index', compact('ingredients','selectedIngredients','recipes', 'fridgeListIngredients', 'searchData'));
+}
+
+   
     public function search(Request $request)
     {
         $query = $request->input('query');
