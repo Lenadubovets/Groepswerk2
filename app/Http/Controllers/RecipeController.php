@@ -70,13 +70,13 @@ class RecipeController extends Controller
 
         // Check if the recipe is already in the favorite list
         if ($user->favoriteRecipes()->where('recipe_id', $recipe->id)->exists()) {
-          return back()->with('error', 'Recipe is already in favorites.');
+          return back()->with('message', 'Recipe is already in favorites.');
         }
 
          // Attach the recipe to the favorite list
         $user->favoriteRecipes()->attach($recipe);
 
-        return back()->with('success', 'Recipe added to favorites.');
+        return back()->with('message', 'Recipe added to favorites.');
     }
 
 
@@ -86,7 +86,7 @@ class RecipeController extends Controller
         // Detach the recipe from the authenticated user's favoriteRecipes relationship
         auth()->user()->favoriteRecipes()->detach($recipe);
     
-        return redirect()->back()->with('success', 'Recipe removed from favorites.');
+        return redirect()->back()->with('message', 'Recipe removed from favorites.');
     }
     
 
