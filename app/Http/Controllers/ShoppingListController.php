@@ -26,17 +26,18 @@ class ShoppingListController extends Controller
     }
 
     //Remove From Shopping List
-    public function delete($ingredientId)
+    public function delete(Request $request)
     {
-        $user = auth()->user();
+        //Get the selected ingredients
+        $selectedIngredients = $request->input('selectedIngredients');
+
+        //Delete the ingredients from the DB
         DB::table('ingredient_user')
-            ->where('user_id', $user->id)
-            ->where('ingredient_id', $ingredientId)
             ->where('list', 'shoppingList')
-            ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
+            ->whereIn('ingredient_id', $selectedIngredients)
             ->delete();
 
-        return redirect()->route('shoppinglist.index')->with('message', 'Ingredient removed successfully!');
+        return redirect()->route('shoppinglist.index')->with('message', 'Selected ingredients have been removed.');
     }
 
     //Add To Shopping List
