@@ -33,9 +33,9 @@
         <div class="relative pl-16">
             <dt class="text-base font-semibold leading-7 text-gray-900">
                 <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600">
-                    <i class="fa-regular fa-thumbs-up text-white text-xl"></i>
+                    <i class="fa-solid fa-heart text-white text-xl"></i>
                 </div>
-                <h2 class="text-2xl font-bold">Favorite recipes</h2>
+                <h2 class="text-2xl font-bold">My favorite recipes</h2>
             </dt>
             <dd class="mt-2 text-base leading-7 text-gray-600">
                 @include('ingredients.favorites', ['recipes' => $recipes])
