@@ -7,12 +7,14 @@ use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
 
 class IngredientController extends Controller
 {
-    //Combine 2 views
-    public function index()
+
+//Combine 3 views
+public function index()
 {
     $searchData = $this->search(request());
     $showData = $this->show();
@@ -21,9 +23,14 @@ class IngredientController extends Controller
     $selectedIngredients = $searchData['selectedIngredients'];
     
     // Fetch the updated quantities
-    $fridgeListIngredients = $this->show()['fridgeListIngredients'];
+    $fridgeListIngredients = $showData['fridgeListIngredients'];
 
-    return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'fridgeListIngredients'));
+    // Retrieve favorite recipes from UserController
+    $userController = new UserController();
+    $favoritesData = $userController->favorites();
+    $recipes = $favoritesData['recipes'];
+
+    return view('ingredients.index', compact('ingredients','selectedIngredients','recipes', 'fridgeListIngredients', 'searchData'));
 }
 
 

@@ -56,6 +56,11 @@ Route::get('/recipes/{id}/download', [RecipeController::class, 'downloadPDF'])
     ->middleware('auth')
     ->name('recipes.download');
 
+//like recipe
+
+Route::post('/recipes/{recipe}/like', [RecipeController::class, 'like'])->name('recipes.like');
+
+
 
 //Search for recipes based on ingredients
 Route::get('/recipes/search', [RecipeController::class, 'search'])->name('recipes.search')->middleware('auth');
