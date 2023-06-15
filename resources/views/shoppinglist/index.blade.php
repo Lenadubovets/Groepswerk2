@@ -18,18 +18,30 @@
                             @csrf
                             @method('DELETE')
                             <div class="flex items-center">
-                                <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}">
+                                <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}"
+                                    class="ingredient-checkbox">
                                 <span class="ml-2">{{ $ingredient->name }}</span>
                             </div>
                     @endforeach
                 </div>
                 <div class="col-span-4 flex flex-col justify-center">
                     <!-- Remove button -->
-                    <button type="submit"
-                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Remove</button>
+                    <button type="submit" id="removeButton"
+                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        disabled>Remove</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script>
+        $(document).ready(function() {
+            $('.ingredient-checkbox').change(function() {
+                var itemsChecked = $('.ingredient-checkbox:checked').length > 0;
+                $('#removeButton').prop('disabled', !itemsChecked);
+            });
+        });
+    </script>
 @endsection
