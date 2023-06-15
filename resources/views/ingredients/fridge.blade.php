@@ -43,7 +43,7 @@
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                         </button>
                                                     @else
-                                                        <button class="text-xs text-white bg-blue-500 hover:bg-blue-700 rounded-lg px-2 py-1">
+                                                        <button class="text-xs text-white bg-blue-500 hover:bg-indigo-600 rounded-lg px-2 py-1">
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                         </button>
                                                     @endif
