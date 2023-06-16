@@ -50,14 +50,27 @@ class ShoppingListController extends Controller
         $user = auth()->user();
         $existingIngredient = $ingredient->users()->where('user_id', $user->id)->where('list', $list)->first();
 
+        // If ingredient is not already in the shopping list, add it
+        if (!$existingIngredient) {
+            $ingredient->users()->attach($user->id, ['list' => $list]);
+            $message = 'Ingredient added successfully!';
+        } else {
+            $message = 'Ingredient is already in the shopping list!';
+        }
 
-        $ingredient->users()->attach($user->id, ['list' => $list]);
-
-        $message = 'Ingredient added successfully!';
-        return redirect()->route('ingredients.index')->with([
-            'message' => $message,
-            'existingIngredient' => $existingIngredient,
-        ]);
+        // If request is AJAX, return JSON response
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => $message,
+                'success' => !$existingIngredient,
+            ]);
+        } else {
+            //For non-AJAX, redirect w/ message
+            return redirect()->route('ingredients.index')->with([
+                'message' => $message,
+                'existingIngredient' => $existingIngredient,
+            ]);
+        }
     }
 
 }
