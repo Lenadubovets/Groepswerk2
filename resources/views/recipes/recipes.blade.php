@@ -69,7 +69,7 @@
   /* Increase the width of the tooltip container */
   width: 160px;
   /* Adjust the positioning to accommodate the wider text */
-  left: -150px;
+  left: -170px;
   
 }
 
