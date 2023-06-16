@@ -35,13 +35,23 @@
         <h3 class="text-2xl text-center hover:text-indigo-600"> 
           <a href="/recipe/{{$recipe['id']}}">{{$recipe->name}}</a>
         </h3>
-        <div class="flex justify-between items-center mt-4"> 
+        <div class="flex justify-between items-center mt-4 relative">
           <!-- Heart (like) button -->
           <form action="{{ route('recipes.like', $recipe) }}" method="POST">
             @csrf
-            <button type="submit" class="text-red-500 hover:text-red-600">
-              <i class="fa fa-heart"></i>
-            </button>
+            @if ($recipe->isLiked)
+              <button type="submit" class="heart-button text-red-500 hover:text-red-600" >
+                <i class="fa fa-heart"></i>
+              </button>
+            @else
+               <button type="submit" class="heart-button text-gray-400 hover:text-red-500 relative">
+                 <i class="fa fa-heart"></i>
+                  <div class="tooltip hidden bg-white text-black text-sm py-1 px-4 rounded-md absolute -top-10 left ">
+                  Add recipe to your favorites
+                 </div>
+                </button>
+            
+            @endif
           </form>
         </div>
         <img src="{{ $recipe->image }}" alt="{{ $recipe->name }}" class="mt-4 mx-auto max-w-200">
@@ -53,4 +63,43 @@
 
 {{ $recipes->links() }}
 
+
+<style>
+.tooltip {
+  /* Increase the width of the tooltip container */
+  width: 160px;
+  /* Adjust the positioning to accommodate the wider text */
+  left: -150px;
+  
+}
+
+.tooltip p {
+  /* Set a fixed height and enable word-wrap for two lines of text */
+  height: 2.4em;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+</style>
+
+<script>
+  const heartButtons = document.querySelectorAll('.heart-button');
+  heartButtons.forEach(button => {
+    button.addEventListener('mouseover', () => {
+      const tooltip = button.querySelector('.tooltip');
+      if (tooltip) {
+        tooltip.classList.remove('hidden');
+      }
+    });
+
+    button.addEventListener('mouseout', () => {
+      const tooltip = button.querySelector('.tooltip');
+      if (tooltip) {
+        tooltip.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
 @endsection
+
