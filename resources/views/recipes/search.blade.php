@@ -4,28 +4,50 @@
     <h1 class="mb-10">Recipes you can already make:</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-4">
         @if ($recipes->count() > 0)
-            @foreach ($recipes as $recipe)
-            <div class="bg-gray-50 border border-gray-200 rounded p-6 flex">
-                <div class="flex flex-col items-center"> <!-- Added 'items-center' class to center the content horizontally -->
-                  <h3 class="text-2xl hover:text-blue-500">
-                    <a href="/recipe/{{$recipe['id']}}">{{$recipe->name}}</a>
-                  </h3>
-                  <div class="flex justify-between items-center mt-4"> 
-                    <!-- Heart (like) button -->
-                    <form action="{{ route('recipes.like', $recipe) }}" method="POST">
-                      @csrf
-                      <button type="submit" class="text-red-500 hover:text-red-600">
-                        <i class="fa fa-heart"></i>
-                      </button>
-                    </form>
-                  </div>
-                  <img src="{{ $recipe->image }}" alt="{{ $recipe->name }}" class="mt-4 mx-auto max-w-200">
-                </div>
-              </div>
-            @endforeach
+        @foreach($recipes as $recipe)
+        @include('components.recipe-card', ['recipes' => $recipes])
+        @endforeach
         @else
             <p>No recipes found 😭</p>
         @endif
     </div>
     </body>
+
+    <style>
+      .tooltip {
+        /* Increase the width of the tooltip container */
+        width: 160px;
+        /* Adjust the positioning to accommodate the wider text */
+        left: -170px;
+        
+      }
+      
+      .tooltip p {
+        /* Set a fixed height and enable word-wrap for two lines of text */
+        height: 2.4em;
+        overflow: hidden;
+        word-wrap: break-word;
+      }
+      
+      </style>
+      
+      <script>
+        const heartButtons = document.querySelectorAll('.heart-button');
+        heartButtons.forEach(button => {
+          button.addEventListener('mouseover', () => {
+            const tooltip = button.querySelector('.tooltip');
+            if (tooltip) {
+              tooltip.classList.remove('hidden');
+            }
+          });
+      
+          button.addEventListener('mouseout', () => {
+            const tooltip = button.querySelector('.tooltip');
+            if (tooltip) {
+              tooltip.classList.add('hidden');
+            }
+          });
+        });
+      </script>
+      
 @endsection
