@@ -23,10 +23,15 @@
                                     $isUserIngredient = $userFridgeListIngredients->contains($ingredient->id);
                                 @endphp
                                 <li>
-                                    <label class="{{ $isInShoppingList ? 'text-blue-500' : ($isUserIngredient ? 'text-green-500' : 'text-orange-500') }}">
-                                        <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}" {{ $isInShoppingList || $isUserIngredient ? 'disabled' : '' }}>
-                                        <span>{{ $ingredient->name }}</span>
-                                    </label>
+                                <label class="{{ $isInShoppingList ? 'text-blue-500' : ($isUserIngredient ? 'text-green-500' : 'text-orange-500') }}"
+                                    data-tippy-content=""
+                                >
+                                    <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}"
+                                        {{ $isInShoppingList || $isUserIngredient ? 'disabled' : '' }}
+                                    >
+                                    <span>{{ $ingredient->name }}</span>
+                                </label>
+
                                 </li>
                             @endforeach
                             </ul>
@@ -136,4 +141,29 @@
     });
 });
 </script>
+
+<!-- Add Tooltip depending on the color -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        tippy('[data-tippy-content]', {
+            placement: 'top',
+            onShow(instance) {
+                const labelElement = instance.reference;
+                const ingredientColor = labelElement.classList[0];
+
+                let tooltipContent = '';
+                if (ingredientColor === 'text-blue-500') {
+                    tooltipContent = 'In Shopping List';
+                } else if (ingredientColor === 'text-green-500') {
+                    tooltipContent = 'In Freego';
+                } else if (ingredientColor === 'text-orange-500') {
+                    tooltipContent = 'Missing Ingredient';
+                }
+
+                instance.setContent(tooltipContent);
+            },
+        });
+    });
+</script>
+
 @endsection

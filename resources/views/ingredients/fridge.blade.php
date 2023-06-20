@@ -33,7 +33,7 @@
                                 @csrf
                                 <input type="hidden" name="ingredient_id" value="{{ $ingredient->id }}">
                                 <input type="number" name="quantity" class="py-2 px-4 w-16 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" min="1" value="{{ $quantity }}">
-                                <button type="submit" class="text-xs text-white bg-green-500 hover:bg-green-700 rounded-lg px-2 py-1 ml-2">
+                                <button type="submit" class="text-xs text-white bg-green-500 hover:bg-green-700 rounded-lg px-2 py-1 ml-2"  data-tippy-content="Update Amount">
                                     Save amount
                                 </button>
                             </form>
@@ -44,11 +44,11 @@
                                     @csrf
                                     <input type="hidden" name="list" value="shoppingList">
                                     @if(in_array($ingredient->id, $shoppingListIngredientsIds))
-                                        <button class="text-xs text-white bg-gray-300 rounded-lg px-2 py-1" disabled>
+                                        <button class="text-xs text-white bg-gray-300 rounded-lg px-2 py-1" disabled  data-tippy-content="Already In Shopping List">
                                             <i class="fa-solid fa-cart-plus"></i>
                                         </button>
                                     @else
-                                        <button class="text-xs text-white bg-blue-500 hover:bg-indigo-600 rounded-lg px-2 py-1">
+                                        <button class="text-xs text-white bg-blue-500 hover:bg-indigo-600 rounded-lg px-2 py-1"  data-tippy-content="Add to Shopping List">
                                             <i class="fa-solid fa-cart-plus"></i>
                                         </button>
                                     @endif
@@ -56,7 +56,7 @@
                                 <form action="{{ route('ingredients.delete', ['id' => $ingredient->id]) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="text-xs text-white bg-red-500 hover:bg-red-700 rounded-lg px-2 py-1" type="submit">
+                                    <button class="text-xs text-white bg-red-500 hover:bg-red-700 rounded-lg px-2 py-1" type="submit"  data-tippy-content="Remove From Freego">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
