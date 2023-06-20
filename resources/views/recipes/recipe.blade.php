@@ -23,15 +23,14 @@
                                     $isUserIngredient = $userFridgeListIngredients->contains($ingredient->id);
                                 @endphp
                                 <li>
-                                <label class="{{ $isInShoppingList ? 'text-blue-500' : ($isUserIngredient ? 'text-green-500' : 'text-orange-500') }}"
-                                    data-tippy-content=""
-                                >
-                                    <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}"
-                                        {{ $isInShoppingList || $isUserIngredient ? 'disabled' : '' }}
-                                    >
-                                    <span>{{ $ingredient->name }}</span>
-                                </label>
-
+                                    <label class="{{ ($isInShoppingList && !$isUserIngredient) ? 'text-blue-500' : ($isUserIngredient ? 'text-green-500' : 'text-orange-500') }}"
+                                        data-tippy-content="{{ ($isInShoppingList && !$isUserIngredient) ? 'In Shopping List' : ($isUserIngredient ? 'In Fridge List' : 'Missing Ingredient') }}"
+                                        >
+                                        <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}"
+                                        {{ ($isInShoppingList || $isUserIngredient) ? 'disabled' : '' }}
+                                        >
+                                        <span>{{ $ingredient->name }}</span>
+                                    </label>
                                 </li>
                             @endforeach
                             </ul>
