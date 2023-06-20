@@ -16,9 +16,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="//unpkg.com/alpinejs" defer></script>  
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- AlpineJS -->
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Tippy.js -->
+    <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.js"></script>
+
 
     
     <title>Freego</title>
@@ -86,6 +87,15 @@
         @include('footer')
     </div>
     <x-flash-message/>
+    <!-- Tooltips -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        tippy('[data-tippy-content]', {
+            placement: 'top',
+        });
+    });
+</script>
 </body>
 
 </html>
+

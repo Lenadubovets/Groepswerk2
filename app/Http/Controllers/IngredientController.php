@@ -14,32 +14,32 @@ class IngredientController extends Controller
 {
 
 
-//Combine 3 views
-public function index()
-{
-    $searchData = $this->search(request());
-    $showData = $this->show();
+    //Combine 3 views
+    public function index()
+    {
+        $searchData = $this->search(request());
+        $showData = $this->show();
 
-    $ingredients = $searchData['ingredients'];
-    $selectedIngredients = $searchData['selectedIngredients'];
-    
-    // Fetch the updated quantities
-    $fridgeListIngredients = $showData['fridgeListIngredients'];
+        $ingredients = $searchData['ingredients'];
+        $selectedIngredients = $searchData['selectedIngredients'];
 
-    // Retrieve favorite recipes from UserController
-    $userController = new UserController();
-    $favoritesData = $userController->favorites();
-    $recipes = $favoritesData['recipes'];
-    //Fetch the ingredients that are in the shopping list
-     $shoppingListIngredientsIds = auth()->user()->ingredients()->wherePivot('list', 'shoppingList')->pluck('ingredients.id')->toArray();
+        // Fetch the updated quantities
+        $fridgeListIngredients = $showData['fridgeListIngredients'];
 
-        
-
-    return view('ingredients.index', compact('ingredients','selectedIngredients','recipes', 'fridgeListIngredients', 'searchData','shoppingListIngredientsIds'));
-}
+        // Retrieve favorite recipes from UserController
+        $userController = new UserController();
+        $favoritesData = $userController->favorites();
+        $recipes = $favoritesData['recipes'];
+        //Fetch the ingredients that are in the shopping list
+        $shoppingListIngredientsIds = auth()->user()->ingredients()->wherePivot('list', 'shoppingList')->pluck('ingredients.id')->toArray();
 
 
-   
+
+        return view('ingredients.index', compact('ingredients', 'selectedIngredients', 'recipes', 'fridgeListIngredients', 'searchData', 'shoppingListIngredientsIds'));
+    }
+
+
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -104,19 +104,21 @@ public function index()
 
     public function updateQuantities(Request $request)
     {
-        $quantities = $request->input('quantities');
+        $ingredientId = $request->input('ingredient_id');
+        $quantity = $request->input('quantity');
+        $list = 'fridgeList';
 
-        foreach ($quantities as $ingredientId => $quantity) {
-            DB::table('ingredient_user')
-                ->where('user_id', auth()->id())
-                ->where('ingredient_id', $ingredientId)
-                ->update(['quantity' => $quantity]);
+        DB::table('ingredient_user')
+            ->where('user_id', auth()->id())
+            ->where('ingredient_id', $ingredientId)
+            ->where('list', $list)
+            ->update(['quantity' => $quantity]);
 
-            // Store the quantity in the session
-            session(['ingredient_quantity_' . $ingredientId => $quantity]);
-        }
+        // Store the quantity in the session
+        session(['ingredient_quantity_' . $ingredientId => $quantity]);
 
-        return redirect()->route('ingredients.index')->with('success', 'Quantities updated successfully!');
+        return redirect()->route('ingredients.index')->with('success', 'Quantity updated successfully!');
     }
+
 
 }
