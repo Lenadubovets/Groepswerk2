@@ -49,7 +49,7 @@ class User extends \TCG\Voyager\Models\User
     public function ingredients()
     {
         return $this->belongsToMany(Ingredient::class, 'ingredient_user', 'user_id', 'ingredient_id')
-            ->withPivot('list');
+            ->withPivot('list', 'quantity');
     }
 
     //Get User's Freego Items
@@ -74,7 +74,7 @@ class User extends \TCG\Voyager\Models\User
 
     public function favoriteRecipes()
     {
-    return $this->belongsToMany(Recipe::class);
+        return $this->belongsToMany(Recipe::class);
     }
 
 
