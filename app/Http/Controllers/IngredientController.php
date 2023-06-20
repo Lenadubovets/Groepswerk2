@@ -64,7 +64,7 @@ class IngredientController extends Controller
             ->where('user_id', $user->id)
             ->where('list', 'fridgeList')
             ->join('ingredients', 'ingredient_user.ingredient_id', '=', 'ingredients.id')
-            ->select('ingredients.*')
+            ->select('ingredients.*', 'ingredient_user.quantity')
             ->get();
 
         return ['fridgeListIngredients' => $fridgeListIngredients];
@@ -101,6 +101,7 @@ class IngredientController extends Controller
 
         return redirect()->route('ingredients.index')->with('message', 'Ingredient removed successfully!');
     }
+
 
     public function updateQuantities(Request $request)
     {
