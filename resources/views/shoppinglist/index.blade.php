@@ -28,7 +28,14 @@
                     <!-- Remove button -->
                     <button type="submit" id="removeButton"
                         class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        disabled>Remove</button>
+                        disabled>
+                        Remove
+                    </button>
+                     <!-- Share button -->
+                     <button type="button" id="shareButton"
+                        class="mt-4 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <i class="fas fa-share-square"></i> Share
+                    </button>
                 </div>
                 </form>
             </div>
@@ -40,6 +47,40 @@
             $('.ingredient-checkbox').change(function() {
                 var itemsChecked = $('.ingredient-checkbox:checked').length > 0;
                 $('#removeButton').prop('disabled', !itemsChecked);
+            });
+            
+            $('#shareButton').click(function() {
+                //AJAX-request to post to the route
+                $.ajax({
+                    url: '/shoppinglist/share',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        Swal.fire({
+                            icon: 'Success',
+                            title: 'Link generated',
+                            text: 'Here is your link: ' + data.link,
+                            footer: '<button id="copyButton" class="btn btn-primary">Copy Link</button>'
+                        });
+
+                        $("#copyButton").click(function() {
+                            var $temp = $("<input>");
+                            $("body").append($temp);
+                            $temp.val(data.link).select();
+                            document.execCommand("copy");
+                            $temp.remove();
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Copied!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        });
+                    }
+                });
             });
         });
     </script>

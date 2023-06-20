@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\SharedShoppingListController;
 use App\Http\Controllers\ShoppingListController;
 use TCG\Voyager\Facades\Voyager;
 
@@ -90,6 +91,11 @@ Route::get('/shoppinglist', [ShoppingListController::class, 'show'])->name('shop
 //Remove From Shopping List
 Route::delete('/shoppinglist', [ShoppingListController::class, 'delete'])->name('shoppinglist.remove')->middleware('auth');
 
+//Make a SharedShoppingList Link
+Route::post('/shoppinglist/share', [SharedShoppingListController::class, 'share']);
+
+//Show Shared Shopping List
+Route::get('/sharedshoppinglist/{shareable_link}', [SharedShoppingListController::class, 'show']);
 //Add To Shopping List
 Route::post('/shoppinglist/{id}', [ShoppingListController::class, 'store'])->name('shoppinglist.store')->middleware('auth');
 

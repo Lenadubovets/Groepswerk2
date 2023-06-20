@@ -52,6 +52,11 @@ class User extends \TCG\Voyager\Models\User
             ->withPivot('list', 'quantity');
     }
 
+    public function sharedShoppingLists()
+    {
+        return $this->hasMany(SharedShoppingList::class);
+    }
+
     //Get User's Freego Items
     public function getFridgeListIngredients()
     {
