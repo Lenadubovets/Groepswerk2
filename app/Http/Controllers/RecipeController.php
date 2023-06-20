@@ -34,23 +34,32 @@ class RecipeController extends Controller
         $recipe = Recipe::findOrFail($id);
         $recipe->load('ingredients');
 
-        //Retrieve User's Selected Ingredients
+        // Retrieve User's Selected Ingredients
         $userFridgeListIngredients = auth()->user()->getFridgeListIngredients();
         $userShoppingListIngredients = auth()->user()->getShoppingListIngredients();
 
-        //Sort the ingredients
-        $sortedIngredients = $recipe->ingredients->sortBy(function ($ingredient) use ($userShoppingListIngredients, $userFridgeListIngredients){
-            if ($userShoppingListIngredients->contains($ingredient->id)){
-                return 1;
-            } elseif ($userFridgeListIngredients->contains($ingredient->id)){
-                return 0;
+        // Sort the ingredients
+        $sortedIngredients = $recipe->ingredients->sortBy(function ($ingredient) use ($userShoppingListIngredients, $userFridgeListIngredients) {
+            $ingredientId = $ingredient->id;
+
+            // Check if the ingredient is in the shopping list or user's fridge list
+            $isInShoppingList = $userShoppingListIngredients->contains($ingredientId);
+            $isUserIngredient = $userFridgeListIngredients->contains($ingredientId);
+
+            // Determine the sort order based on the lists
+            if ($isUserIngredient) {
+                return 0; // Sort ingredients in the user's fridge list first
+            } elseif ($isInShoppingList) {
+                return 1; // Sort ingredients in the shopping list next
             } else {
-                return 2;
+                return 2; // Sort remaining ingredients at the end
             }
         });
 
         return view('recipes.recipe', compact('recipe', 'sortedIngredients', 'userShoppingListIngredients', 'userFridgeListIngredients'));
     }
+
+
 
     public function downloadPDF($id)
     {
@@ -70,10 +79,10 @@ class RecipeController extends Controller
 
         // Check if the recipe is already in the favorite list
         if ($user->favoriteRecipes()->where('recipe_id', $recipe->id)->exists()) {
-          return back()->with('message', 'Recipe is already in favorites.');
+            return back()->with('message', 'Recipe is already in favorites.');
         }
 
-         // Attach the recipe to the favorite list
+        // Attach the recipe to the favorite list
         $user->favoriteRecipes()->attach($recipe);
 
         return back()->with('message', 'Recipe added to favorites.');
@@ -85,10 +94,10 @@ class RecipeController extends Controller
     {
         // Detach the recipe from the authenticated user's favoriteRecipes relationship
         auth()->user()->favoriteRecipes()->detach($recipe);
-    
+
         return redirect()->back()->with('message', 'Recipe removed from favorites.');
     }
-    
+
 
     public function search()
     {
