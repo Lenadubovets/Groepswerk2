@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SharedShoppingList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class SharedShoppingListController extends Controller
@@ -21,8 +22,7 @@ class SharedShoppingListController extends Controller
             $items[] = [
                 'name' => $ingredient->name,
                 'quantity' => $ingredient->pivot->quantity,
-                //TODO: remove, update?
-                'checked' => false,
+                //TODO: remove, update
             ];
         }
 
@@ -32,8 +32,13 @@ class SharedShoppingListController extends Controller
             'items' => json_encode($items),
         ]);
 
+        $shareable_link = url('/sharedshoppinglist/' . $shoppingList->shareable_link);
+        //Create a signed URL
+        $url = URL::signedRoute('sharedShoppingList.show', ['shareable_link' => $shoppingList->shareable_link]);
+
+
         return response()->json([
-            'link' => url('/sharedshoppinglist/' . $shoppingList->shareable_link),
+            'link' => $url,
         ]);
     }
 
