@@ -24,14 +24,21 @@
                             <form action="{{ route('updateQuantities') }}" method="POST" class="inline">
                                 @csrf
                                 <input type="hidden" name="ingredient_id" value="{{ $ingredient->id }}">
-                                <input type="number" name="quantity" class="py-2 px-4 w-16 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"  min='1' value="{{ $ingredient->quantity }}">
-                                <button type="submit" class="text-xs text-white bg-green-500 hover:bg-green-700 rounded-lg px-2 py-1 ml-2"  data-tippy-content="Update Amount">
-                                    Save amount
-                                </button>
+                                <div class="flex">
+                                    <input type="number" name="quantity" class="py-2 px-4 w-16 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" min="1" value="{{ $ingredient->quantity }}">
+                                    <select name="unit" class="ml-2 rounded-md border-b-2 border-black text-xs">
+                                        <option value="liter">Liter(s)</option>
+                                        <option value="gram">Gram(s)</option>
+                                        <option value="piece">Piece(s)</option>
+                                    </select>
+                                    <button type="submit" class="text-xs text-white bg-green-500 hover:bg-green-700 rounded-lg px-2 py-1 ml-2" data-tippy-content="Update Amount">
+                                        Save amount
+                                    </button>
+                                </div>
                             </form>
                         </td>
                         <td>
-                            <div class="space-x-2">
+                            <div class="space-y-2">
                                 <form action="{{ route('shoppinglist.store', $ingredient->id) }}" method="POST" class="inline">
                                     @csrf
                                     <input type="hidden" name="list" value="shoppingList">
