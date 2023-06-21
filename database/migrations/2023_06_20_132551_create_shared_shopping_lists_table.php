@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('shareable_link')->unique();
-            $table->json('items'); //name, quantity, checked
+            $table->json('items'); //name, quantity
             $table->timestamps();
         });
     }

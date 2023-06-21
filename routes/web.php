@@ -95,7 +95,10 @@ Route::delete('/shoppinglist', [ShoppingListController::class, 'delete'])->name(
 Route::post('/shoppinglist/share', [SharedShoppingListController::class, 'share']);
 
 //Show Shared Shopping List
-Route::get('/sharedshoppinglist/{shareable_link}', [SharedShoppingListController::class, 'show']);
+Route::get('/sharedshoppinglist/{shareable_link}', [SharedShoppingListController::class, 'show'])
+    ->name('sharedShoppingList.show')
+    ->middleware('signed');
+
 //Add To Shopping List
 Route::post('/shoppinglist/{id}', [ShoppingListController::class, 'store'])->name('shoppinglist.store')->middleware('auth');
 
