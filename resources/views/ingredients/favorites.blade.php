@@ -7,7 +7,7 @@
         <div>
           <span style="color: red;">&hearts;</span>
           
-            <a class="hover:text-indigo-600"href="/recipe/{{$recipe['id']}}">{{$recipe->name}}</a>
+            <a class="hover:text-indigo-600" data-tippy-content="See full recipe" href="/recipe/{{$recipe['id']}}">{{$recipe->name}}</a>
           
         </div>
         <form action="{{ route('recipes.destroy', $recipe->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this recipe?')">

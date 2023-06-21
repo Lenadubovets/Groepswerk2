@@ -37,43 +37,5 @@
 
 {{ $recipes->links() }}
 
-
-<style>
-.tooltip {
-  /* Increase the width of the tooltip container */
-  width: 160px;
-  /* Adjust the positioning to accommodate the wider text */
-  left: -170px;
-  
-}
-
-.tooltip p {
-  /* Set a fixed height and enable word-wrap for two lines of text */
-  height: 2.4em;
-  overflow: hidden;
-  word-wrap: break-word;
-}
-
-</style>
-
-<script>
-  const heartButtons = document.querySelectorAll('.heart-button');
-  heartButtons.forEach(button => {
-    button.addEventListener('mouseover', () => {
-      const tooltip = button.querySelector('.tooltip');
-      if (tooltip) {
-        tooltip.classList.remove('hidden');
-      }
-    });
-
-    button.addEventListener('mouseout', () => {
-      const tooltip = button.querySelector('.tooltip');
-      if (tooltip) {
-        tooltip.classList.add('hidden');
-      }
-    });
-  });
-</script>
-
 @endsection
 
