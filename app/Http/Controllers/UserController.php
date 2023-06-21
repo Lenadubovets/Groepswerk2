@@ -76,10 +76,28 @@ class UserController extends Controller
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
 
+    //Show Manage Profile View
     public function showProfile()
     {
         $user = Auth::user();
         return view('users.profile', compact('user'));
+    }
+
+    //Update User Name
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        //Update name
+        $user->name = $request->input('name');
+
+        //Update email
+        $user->email = $request->input('email');
+
+        // Save the updated fields
+        $user->save();
+
+        return redirect()->back()->with('message', 'Profile updated successfully!');
     }
 
     public function favorites()

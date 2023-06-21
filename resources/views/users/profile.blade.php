@@ -9,7 +9,7 @@
                 <h2 class="text-2xl font-bold">Your Profile</h2>
             </div>
         </div>
-        <form method="" action="">
+        <form method="POST" action="{{ route('update.profile') }}">
             @csrf
             <div class="container mx-auto pt-2 pb-6">
                 <div class="flex justify-between">
@@ -26,8 +26,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="mb-6">
                 <label for="name" class="inline-block text-lg mb-2">Name</label>
                 <input type="name" class="border border-gray-200 rounded p-2 w-full" name="name"
