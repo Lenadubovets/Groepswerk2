@@ -26,7 +26,7 @@
                                 <input type="hidden" name="ingredient_id" value="{{ $ingredient->id }}">
                                 <div class="flex">
                                     <input type="number" name="quantity" class="py-2 px-4 w-16 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" min="1" value="{{ $ingredient->quantity }}">
-                                    <select name="unit" class="ml-2 rounded-md border-b-2 border-black text-xs">
+                                    <select name="unit" class="ml-2 rounded-md border-b-2 border-black text-xs" data-tippy-content="Select the unit">
                                         <option value="liter">Liter(s)</option>
                                         <option value="gram">Gram(s)</option>
                                         <option value="piece">Piece(s)</option>
