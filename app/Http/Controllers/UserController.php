@@ -76,16 +76,22 @@ class UserController extends Controller
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
 
+    public function showProfile()
+    {
+        $user = Auth::user();
+        return view('users.profile', compact('user'));
+    }
+
     public function favorites()
     {
         $user = auth()->user();
         $recipes = $user->favoriteRecipes()->get(); // or $user->favoriteRecipes()->paginate(10);
-    
+
         // dd($recipes);
-    
+
         return view('ingredients.index', ['recipes' => $recipes]);
     }
-    
-    
-    
+
+
+
 }
