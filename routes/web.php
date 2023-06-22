@@ -125,3 +125,16 @@ Route::get('/login', [UserController::class, 'login'])->name('login');
 
 //Log In User
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+
+//Show User Profile
+Route::get('/profile', [UserController::class, 'showProfile'])->middleware('auth');
+
+//Update Profille
+Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('update.profile')->middleware('auth');
+
+//Show Change Password Form
+Route::get('/profile/change-password', [UserController::class, 'showChangePasswordForm'])->name('change.password')->middleware('auth');
+
+
+//Update Password
+Route::post('/profile/update-password', [UserController::class, 'updatePassword'])->name('update.password')->middleware('auth');

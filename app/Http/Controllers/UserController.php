@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,16 +77,70 @@ class UserController extends Controller
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
 
+    //Show Manage Profile View
+    public function showProfile()
+    {
+        $user = Auth::user();
+        return view('users.profile', compact('user'));
+    }
+
+    //Update Profile
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        //Update name
+        $user->name = $request->input('name');
+
+        //Update email
+        $user->email = $request->input('email');
+
+        // Save the updated fields
+        $user->save();
+
+        return redirect()->back()->with('message', 'Profile updated successfully!');
+    }
+
+    //Show Change Password Form
+    public function showChangePasswordForm()
+    {
+        return view('users.change-password');
+    }
+
+    //Update Password
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        $request->validate([
+            'current_password' => [
+                'required',
+                function ($attribute, $value, $fail) use ($user) {
+                    if (!Hash::check($value, $user->password)) {
+                        $fail('The current password is incorrect.');
+                    }
+                }
+            ],
+            'new_password' => ['required', 'confirmed', 'min:6']
+        ], [
+            'new_password.confirmed' => 'The new password and confirmation do not match.'
+        ]);
+
+        $user->password = bcrypt($request->input('new_password'));
+        $user->save();
+
+        return redirect()->back()->with('message', 'Password updated successfully!');
+    }
+
     public function favorites()
     {
         $user = auth()->user();
         $recipes = $user->favoriteRecipes()->get(); // or $user->favoriteRecipes()->paginate(10);
-    
+
         // dd($recipes);
-    
+
         return view('ingredients.index', ['recipes' => $recipes]);
     }
-    
-    
-    
+
+
+
 }
