@@ -27,9 +27,13 @@
                 <label for="password" class="inline-block text-lg mb-2">
                     Password
                 </label>
-                <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password"
-                    value="{{ old('password') }}" />
-                    <p class="text-xs">Must be at least 6 characters.</p>
+                <div class="relative">
+                    <input type="password" class="border border-gray-200 rounded p-2 w-full pr-10" name="password"
+                        id="new_password">
+                    <i class="fa-regular fa-eye-slash absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
+                        id="password_toggle" onclick="togglePasswordVisibility()" required data-tippy-content="Show/Hide Password"></i>
+                </div>
+                <p class="text-xs">Must be at least 6 characters.</p>
                 @error('password')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -48,7 +52,7 @@
             </div>
 
             <div class="mb-6">
-                <button type="submit"
+                <button type="submit" 
                     class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     Sign Up
                 </button>
@@ -62,4 +66,8 @@
             </div>
         </form>
     </div>
+    <!-- Show/Hide Password -->
+    <script src="{{ asset('js/password-toggle.js') }}"></script>
 @endsection
+
+

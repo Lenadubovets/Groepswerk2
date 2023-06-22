@@ -21,6 +21,7 @@
     <!-- Tippy.js -->
     <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.js"></script>
+
     <!-- Swal -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -94,14 +95,8 @@
         @include('footer')
     </div>
     <x-flash-message/>
-    <!-- Tooltips -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        tippy('[data-tippy-content]', {
-            placement: 'top',
-        });
-    });
-</script>
+    <!-- TippyJS -->
+    <script src="{{ asset('js/tippy.js') }}"></script>
 </body>
 
 </html>
