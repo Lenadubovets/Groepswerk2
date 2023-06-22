@@ -24,16 +24,14 @@
                         
                         @auth()
                             <div class="hidden lg:flex lg:gap-x-12">
-                                <span class="font-bold lowercase px-12">
-                                    Welcome {{ auth()->user()->name }}
-                                </span>
-                            </div>
-                            <div class="hidden lg:flex lg:gap-x-12">
                                 <a href="/shoppinglist" class="text-sm font-semibold leading-6 text-gray-900">
                                     <i class="fa-solid fa-cart-shopping text-indigo-600"></i> Shopping List
                                 </a>
                                 <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900">
                                     <i class="fa-solid fa-plate-wheat text-indigo-600"></i> Recipes
+                                </a>
+                                <a href="/profile" class="text-sm font-semibold leading-6 text-gray-900">
+                                    <i class="fa-solid fa-circle-user text-indigo-600"></i> Your Profile
                                 </a>
                                 <form class="inline text-sm font-semibold" method="POST" action="/logout">
                                     @csrf
