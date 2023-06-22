@@ -15,7 +15,7 @@
                     @if ($recipe->ingredients->count() > 0)
                         <div class="p-6">
                             <h2 class="text-2xl font-semibold mb-4">Ingredients:</h2>
-                            <ul class="list-disc ml-6 mt-2" style="list-style-type: none;">
+                            <ul class="list-disc ml-6 mt-2 w-full w-64 " style="list-style-type: none;">
                             @foreach ($sortedIngredients as $ingredient)
                                 <!-- Check if the ingredient is in the shopping list -->
                                 @php
