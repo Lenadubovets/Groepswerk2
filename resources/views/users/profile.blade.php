@@ -43,10 +43,10 @@
             </div>
         </form>
         <div class="mb-6 flex justify-center py-5">
-            <button type="submit"
+            <a href="{{ route('change.password') }}" type="submit"
                 class="w-5/6 rounded-md bg-neutral-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 Change Password
-            </button>
+            </a>
         </div>
     </div>
 @endsection
