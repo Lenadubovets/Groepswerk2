@@ -157,45 +157,46 @@
                                       </button>
                                 </div>
                                 
-                                <div class="mt-6 flow-root">
-                                    <div class="-my-6 divide-y divide-gray-500/10">
-                                        <div class="space-y-2 py-6">
-                                            <a href="/ingredients"
-                                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                                Your Freego </a>
-                                            <a href="/shoppinglist"
-                                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                                <i class="fa-solid fa-cart-shopping text-indigo-600 "></i> Shopping List</a>
-                                            <a href="/recipes"
-                                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"> <i class="fa-solid fa-plate-wheat text-indigo-600"></i>
-                                                Recipes</a>
-                                            <a href="/profile"
-                                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                                <i class="fa-solid fa-circle-user text-indigo-600"></i> Your Profile </a>
-                                            <form class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" method="POST" action="/logout">
-                                                    @csrf
-                                                    <button type="submit">
-                                                      <i class="fa-solid fa-right-from-bracket text-indigo-600"></i>
-                                                      <span class="text-black lowercase">Logout</span>
-                                                    </button>
-                                            </form>
-
-                              
-                                        </div>
-                                        <div class="py-6">
-                                            <a href="/login"
-                                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
-                                                in</a>
-                                            <a href="/register"
-                                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Register</a>
-                                        </div>
-
-                                    </div>
-                                </div>
+                         <div class="mt-6 flow-root">
+                            @auth()
                                 
+                          
+                            <div class="-my-6 divide-y divide-gray-500/10">
+                                <div class="space-y-2 py-6">
+                                    <a href="/ingredients" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                                        Your Freego
+                                    </a>
+                                    <a href="/shoppinglist" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                                    <i class="fa-solid fa-cart-shopping text-indigo-600"></i> Shopping List
+                                    </a>
+                                    <a href="/recipes" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                                        <i class="fa-solid fa-plate-wheat text-indigo-600"></i> Recipes
+                                    </a>
+                                    <a href="/profile" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                                        <i class="fa-solid fa-circle-user text-indigo-600"></i> Your Profile
+                                    </a> 
+                                    <form class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" method="POST" action="/logout">
+                                         @csrf
+                                         <button type="submit">
+                                             <i class="fa-solid fa-right-from-bracket text-indigo-600"></i>
+                                            <span class="text-black lowercase">Logout</span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="py-6">
+                                     @else
+                                    <a href="/login" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in<span
+                                        aria-hidden="true">&rarr;</span></a>
+                                    <a href="/register" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Register<span
+                                        aria-hidden="true">&rarr;</span></a>
+                                    
+                                   
+                                    @endauth
+                                </div>
+                            </div>
+                        </div>
 
-                                          
-            </header>
+</header>
  
             
    
