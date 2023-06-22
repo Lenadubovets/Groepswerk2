@@ -21,7 +21,6 @@
                     </div>
 
                     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                        
                         @auth()
                             <div class="hidden lg:flex lg:gap-x-12">
                                 <a href="/shoppinglist" class="text-sm font-semibold leading-6 text-gray-900">
@@ -44,10 +43,13 @@
 
                             {{-- If not logged in, show default links --}}
                         @else
-                            <a href="/login" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
-                                    aria-hidden="true">&rarr;</span></a>
-                            <a href="/register" class="text-sm font-semibold leading-6 text-gray-900">Register <span
-                                    aria-hidden="true">&rarr;</span></a>
+                        <div class="hidden lg:flex lg:gap-x-12">
+                            <a href="/login" class="text-sm font-semibold leading-6 text-gray-900">Log in <i class="fa-solid fa-right-to-bracket text-indigo-600"></i>
+                                <span
+                                    aria-hidden="true"></span></a>
+                            <a href="/register" class="text-sm font-semibold leading-6 text-gray-900">Register <i class="fa-solid fa-user-plus text-indigo-600"></i><span
+                                    aria-hidden="true"></span></a>
+                        </div>
                         @endauth
                     </div>
                 </nav>
