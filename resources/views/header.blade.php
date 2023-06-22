@@ -32,11 +32,10 @@
                                 <a href="/profile" class="text-sm font-semibold leading-6 text-gray-900">
                                     <i class="fa-solid fa-circle-user text-indigo-600"></i> Your Profile
                                 </a>
-                                <form class="inline text-sm font-semibold" method="POST" action="/logout">
+                                <form class="h-full text-sm font-semibold leading-6" method="POST" action="/logout">
                                     @csrf
                                     <button type="submit">
-                                      <i class="fa-solid fa-right-from-bracket text-indigo-600"></i>
-                                      <span class="text-black lowercase">Logout</span>
+                                      <i class="fa-solid fa-right-from-bracket text-indigo-600 pr-0.5"></i>Logout
                                     </button>
                                   </form>
                             </div>
