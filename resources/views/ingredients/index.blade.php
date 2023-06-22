@@ -4,8 +4,8 @@
 <div class="py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-2xl lg:text-center">
-      <h1 class="text-3xl font-bold mb-6 mt-6">Your FREEGO Ingredients</h1>
-      <p>Search here all the ingredients that you have in your FREEGO and later add them to your FREEGO list</p>
+        <h1 class="text-4xl font-bold py-4">Welcome {{ auth()->user()->name }}</h1>
+        <p class="">Search here all the ingredients that you have in your FREEGO and later add them to your FREEGO list</p>
       @include('ingredients.search', ['ingredients' => $ingredients, 'selectedIngredients' => $selectedIngredients])
     </div>
     <div class="mx-auto mt-16 max-w-7xl grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
