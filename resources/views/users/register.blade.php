@@ -29,6 +29,7 @@
                 </label>
                 <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password"
                     value="{{ old('password') }}" />
+                    <p class="text-xs">Must be at least 6 characters.</p>
                 @error('password')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -40,6 +41,7 @@
                 </label>
                 <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password_confirmation"
                     value="{{ old('password_confirmation') }}" />
+                    <p class="text-xs">Both passwords must match.</p>
                 @error('password_confirmation')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror

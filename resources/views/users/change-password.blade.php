@@ -12,7 +12,7 @@
         <form method="POST" action="{{  route('update.password') }}">
             @csrf
             <div class="mb-6 pt-4">
-                <label for="current_password" class="inline-block text-lg mb-2" >Current Password</label>
+                <label for="current_password" class="inline-block text-lg mb-1" >Current Password</label>
                 <input type="password" class="border border-gray-200 rounded p-2 w-full" name="current_password" autocomplete="off" required />
                 @error('current_password')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -20,16 +20,18 @@
             </div>
 
             <div class="mb-6">
-                <label for="new_password" class="inline-block text-lg mb-2">New Password</label>
+                <label for="new_password" class="inline-block text-lg mb-1">New Password</label>
                 <input type="password" class="border border-gray-200 rounded p-2 w-full" name="new_password" required />
+                <p class="text-xs">Must be at least 6 characters.</p>
                 @error('new_password')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="mb-6">
-                <label for="new_password_confirmation" class="inline-block text-lg mb-2">Confirm New Password</label>
+                <label for="new_password_confirmation" class="inline-block text-lg mb-1">Confirm New Password</label>
                 <input type="password" class="border border-gray-200 rounded p-2 w-full" name="new_password_confirmation" required />
+                <p class="text-xs">Both passwords must match.</p>
                 @error('new_password_confirmation')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
