@@ -180,7 +180,7 @@
                                          @csrf
                                          <button type="submit">
                                              <i class="fa-solid fa-right-from-bracket text-indigo-600"></i>
-                                            <span class="text-black lowercase">Logout</span>
+                                            <span class="text-black">Logout</span>
                                         </button>
                                     </form>
                                 </div>
