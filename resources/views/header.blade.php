@@ -126,12 +126,12 @@
                                 <a href="/recipes" class="text-sm font-semibold leading-6 text-gray-900"> Recipes </a>
                                 <a href="#" class="text-sm font-semibold leading-6 text-gray-900"><i class="fa-solid fa-heart"></i></a>
                             </div>
-                            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
-                                        aria-hidden="true">&rarr;</span></a>
-                                <a href="/register" class="text-sm font-semibold leading-6 text-gray-900">Register
-                                    <span aria-hidden="true">&rarr;</span></a>
-
+                            <div class="hidden lg:flex lg:gap-x-12">
+                                <a href="/login" class="text-sm font-semibold leading-6 text-gray-900">Log in <i class="fa-solid fa-right-to-bracket text-indigo-600"></i>
+                                    <span
+                                        aria-hidden="true"></span></a>
+                                <a href="/register" class="text-sm font-semibold leading-6 text-gray-900">Register <i class="fa-solid fa-user-plus text-indigo-600"></i><span
+                                        aria-hidden="true"></span></a>
                             </div>
                         </nav>
                         <!-- Mobile menu, show/hide based on menu open state. -->
@@ -163,35 +163,36 @@
                                 
                           
                             <div class="-my-6 divide-y divide-gray-500/10">
-                                <div class="space-y-2 py-6">
-                                    <a href="/ingredients" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                        Your Freego
+                                <div class="space-y-2 py-6 ">
+                                    <a href="/ingredients" class="-mx-3  block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                                        <i class="fa-solid fa-clipboard-list text-indigo-600 w-5"></i> Your Freego
                                     </a>
                                     <a href="/shoppinglist" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                    <i class="fa-solid fa-cart-shopping text-indigo-600"></i> Shopping List
+                                        <i class="fa-solid fa-cart-shopping text-indigo-600 w-5"></i> Shopping List
                                     </a>
                                     <a href="/recipes" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                        <i class="fa-solid fa-plate-wheat text-indigo-600"></i> Recipes
+                                        <i class="fa-solid fa-plate-wheat text-indigo-600 w-5"></i> Recipes
                                     </a>
                                     <a href="/profile" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                                        <i class="fa-solid fa-circle-user text-indigo-600"></i> Your Profile
+                                        <i class="fa-solid fa-circle-user text-indigo-600 w-5" ></i> Your Profile
                                     </a> 
                                     <form class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" method="POST" action="/logout">
                                          @csrf
                                          <button type="submit">
-                                             <i class="fa-solid fa-right-from-bracket text-indigo-600"></i>
-                                            <span class="text-black">Logout</span>
+                                             <i class="fa-solid fa-right-from-bracket text-indigo-600 w-5"></i>
+                                            <span class="text-black"> Logout</span>
                                         </button>
                                     </form>
                                 </div>
                                 <div class="py-6">
                                      @else
-                                   <a href="/login" class="-mx-3 block rounded-lg px-3 py-2.5 font-semibold leading-6 text-gray-900">Log in <i class="fa-solid fa-right-to-bracket text-indigo-600"></i>
-                                <span
-                                    aria-hidden="true"></span></a>
-                                    <a href="/register" class=" -mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Register<i class="fa-solid fa-user-plus text-indigo-600"></i><span
+
+                                        <a href="/login" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"><i class="fa-solid fa-right-to-bracket text-indigo-600"></i> Log in 
+                                    <span
                                         aria-hidden="true"></span></a>
-                                    
+                                <a href="/register" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"><i class="fa-solid fa-user-plus text-indigo-600"></i> Register <span
+                                        aria-hidden="true"></span></a>
+
                                    
                                     @endauth
                                 </div>
