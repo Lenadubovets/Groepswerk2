@@ -186,11 +186,13 @@
                                 </div>
                                 <div class="py-6">
                                      @else
+
                                         <a href="/login" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"><i class="fa-solid fa-right-to-bracket text-indigo-600"></i> Log in 
                                     <span
                                         aria-hidden="true"></span></a>
                                 <a href="/register" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"><i class="fa-solid fa-user-plus text-indigo-600"></i> Register <span
                                         aria-hidden="true"></span></a>
+
                                    
                                     @endauth
                                 </div>
