@@ -102,32 +102,29 @@ class IngredientController extends Controller
         return redirect()->route('ingredients.index')->with('message', 'Ingredient removed successfully!');
     }
 
-
     public function updateQuantities(Request $request)
-{
-    $ingredientId = $request->input('ingredient_id');
-    $quantity = $request->input('quantity');
-    $unit = $request->input('unit');
-    $list = 'fridgeList';
-    $convertedQuantity = $quantity;
-
-    // Update the respective columns in the database table
-    DB::table('ingredient_user')
-        ->where('user_id', auth()->id())
-        ->where('ingredient_id', $ingredientId)
-        ->where('list', $list)
-        ->update([
-            'quantity' => $convertedQuantity, // Update the quantity column with the converted quantity
-            'quantity_liters' => ($unit === 'liter') ? $convertedQuantity : null, // Update the liters column (set to null if not liters)
-            'quantity_grams' => ($unit === 'gram') ? $convertedQuantity : null, // Update the grams column (set to null if not grams)
-            'quantity_pieces' => ($unit === 'piece') ? $convertedQuantity : null, // Update the pieces column (set to null if not pieces)
-        ]);
-
-    // Store the quantity in the session
-    session(['ingredient_quantity_' . $ingredientId => $convertedQuantity]);
-
-    return redirect()->route('ingredients.index')->with('success', 'Quantity updated successfully!');
-}
+    {
+        $ingredientId = $request->input('ingredient_id');
+        $quantity = $request->input('quantity');
+        $unit = $request->input('unit');
+        $list = 'fridgeList';
+        $convertedQuantity = $quantity;
+    
+        // Update the respective columns in the database table
+        DB::table('ingredient_user')
+            ->where('user_id', auth()->id())
+            ->where('ingredient_id', $ingredientId)
+            ->where('list', $list)
+            ->update([
+                'quantity' => $convertedQuantity, // Update the quantity column with the converted quantity
+            ]);
+    
+        // Store the unit in the session
+        session(['ingredient_unit_' . $ingredientId => $unit]);
+    
+        return redirect()->route('ingredients.index')->with('success', 'Quantity updated successfully!');
+    }
+    
 
 
 
