@@ -1,6 +1,17 @@
 @extends('layout')
 @section('content')
     <div class="div bg-gray-50 border border-gray-200 rounded p-10 rounded max-w-lg mx-auto mt-24">
+        <div class="flex flex-wrap pr-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600">
+                <i class="fa-solid fa-user-plus text-white text-xl"></i>
+            </div>
+            <div class="flex items-center justify-center">
+                <h2 class="text-2xl font-bold px-2">Create an account</h2>
+            </div>
+            <div class="flex">
+                <p class="inline-block text-xs py-2">Create your own Freego account and start reducing food waste!</p>
+            </div>
+        </div>
         <form method="POST" action="/users">
             @csrf
             <div class="mb-6">

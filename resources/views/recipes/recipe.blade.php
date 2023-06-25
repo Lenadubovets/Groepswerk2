@@ -11,36 +11,40 @@
                     <h1 class="text-4xl font-semibold mb-4">{{ $recipe->name }}</h1>
                     <p class="text-gray-600">{{ $recipe->instruction }}</p>
                 </div>
-                <div class="col-span-1 p-6">
-                    @if ($recipe->ingredients->count() > 0)
-                        <div class="p-6">
-                            <h2 class="text-2xl font-semibold mb-4">Ingredients:</h2>
-                            <ul class="list-disc ml-6 mt-2 w-full w-64 " style="list-style-type: none;">
-                            @foreach ($sortedIngredients as $ingredient)
-                                <!-- Check if the ingredient is in the shopping list -->
-                                @php
-                                    $isInShoppingList = $userShoppingListIngredients->contains($ingredient->id);
-                                    $isUserIngredient = $userFridgeListIngredients->contains($ingredient->id);
-                                @endphp
-                                <li>
-                                    <label class="{{ ($isInShoppingList && !$isUserIngredient) ? 'text-blue-500' : ($isUserIngredient ? 'text-green-500' : 'text-orange-500') }}"
-                                        data-tippy-content="{{ ($isInShoppingList && !$isUserIngredient) ? 'In Shopping List' : ($isUserIngredient ? 'In Fridge List' : 'Missing Ingredient') }}"
-                                        >
-                                        <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}"
-                                        {{ ($isInShoppingList || $isUserIngredient) ? 'disabled' : '' }}
-                                        >
-                                        <span>{{ $ingredient->name }}</span>
-                                    </label>
-                                </li>
-                            @endforeach
-                            </ul>
-                        </div>
-                        <button id="add-selected-btn">Add to Shopping List</button>
-                    @else
-                        <div class="p-6">
-                            <p>No ingredients found.</p>
-                        </div>
-                    @endif
+            </div>
+            <div class="flex flex-col md:flex-row p-6">
+                @if ($recipe->ingredients->count() > 0)
+                    <div class="p-6">
+                        <h2 class="text-2xl font-semibold mb-4">Ingredients:</h2>
+                        <ul class="list-disc ml-6 mt-2 w-full w-64 " style="list-style-type: none;">
+                        @foreach ($sortedIngredients as $ingredient)
+                            <!-- Check if the ingredient is in the shopping list -->
+                            @php
+                                $isInShoppingList = $userShoppingListIngredients->contains($ingredient->id);
+                                $isUserIngredient = $userFridgeListIngredients->contains($ingredient->id);
+                            @endphp
+                            <li>
+                                <label class="{{ ($isInShoppingList && !$isUserIngredient) ? 'text-blue-500' : ($isUserIngredient ? 'text-green-500' : 'text-orange-500') }}"
+                                    data-tippy-content="{{ ($isInShoppingList && !$isUserIngredient) ? 'In Shopping List' : ($isUserIngredient ? 'In Fridge List' : 'Missing Ingredient') }}"
+                                    >
+                                    <input type="checkbox" name="selectedIngredients[]" value="{{ $ingredient->id }}"
+                                    {{ ($isInShoppingList || $isUserIngredient) ? 'disabled' : '' }}
+                                    >
+                                    <span>{{ $ingredient->name }}</span>
+                                </label>
+                            </li>
+                        @endforeach
+                        </ul>
+                    </div>
+                    <div class="p-6 mt-10 md:mt-0">
+                        <p>Select ingredients to add to your Shopping List!</p>
+                        <button class="bg-gray-300 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-10" data-tippy-content="Add Selected Ingredients to Shopping List" id="add-selected-btn" disabled>Add to Shopping List</button>
+                        @else
+                            <div class="p-6">
+                                <p>No ingredients found.</p>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,12 +79,40 @@
     </script>
 
 <script>
-        $(document).ready(function() {
-    $('#add-selected-btn').click(function() {
-        var selectedIngredients = [];
-        $('input[name="selectedIngredients[]"]:checked').each(function() {
-            selectedIngredients.push($(this).val());
+         $(document).ready(function() {
+        // Function to check if any ingredient is selected
+        function isAnyIngredientSelected() {
+            return $('input[name="selectedIngredients[]"]:checked').length > 0;
+        }
+
+        // Function to enable/disable the "Add to Shopping List" button based on ingredient selection
+        function updateAddButtonState() {
+            var addButton = $('#add-selected-btn');
+            var isChecked = isAnyIngredientSelected();
+            
+            addButton.prop('disabled', !isChecked);
+            if (isChecked) {
+                addButton.removeClass('bg-gray-300');
+                addButton.addClass('bg-indigo-600 hover:bg-blue-700');
+            } else {
+                addButton.removeClass('bg-indigo-600 hover:bg-blue-700');
+                addButton.addClass('bg-gray-300');
+            }
+        }
+
+        // Handle change event of ingredient checkboxes
+        $('input[name="selectedIngredients[]"]').change(function() {
+            updateAddButtonState();
         });
+
+        // Initial state of the "Add to Shopping List" button
+        updateAddButtonState();
+
+        $('#add-selected-btn').click(function() {
+            var selectedIngredients = [];
+            $('input[name="selectedIngredients[]"]:checked').each(function() {
+                selectedIngredients.push($(this).val());
+            });
 
         $.ajaxSetup({
             headers: {
